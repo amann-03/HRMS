@@ -9,21 +9,20 @@
     font-weight: 700;
     font-size: 40px;
 }
- .element {
+.element {
     background-color: whitesmoke;
-    width: 300px;
+    width: 65%;
     margin: 28px;
     height: 60px;
-     padding-left: 7%;
-     padding-right:5%;
+    padding-left: 7%;
+    padding-right: 5%;
     border-radius: 15px;
     border-color: #7f8cad;
-    font-size:20px;
-
+    font-size: 20px;
 }
 #submit {
     background-color: #333e5b;
-    width: 350px;
+    width: 75%;
     margin: 35px;
 
     height: 55px;
@@ -43,6 +42,7 @@
     font-family: sans-serif;
     font-weight: 600;
     padding: 20px;
+    object-fit: cover;
 }
 ::placeholder{
     font-size: 22px;
@@ -64,9 +64,10 @@
 }  
 
 .cropped-ofp {
-width:100%; 
-object-fit: cover;
-object-position: 25% 25%; 
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: 25% 25%;
 }
 #click{
   border: none;
