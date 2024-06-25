@@ -1,7 +1,8 @@
 h2{
-	padding: 2% 4%;
+	padding: 0 5px;
     border-radius: 5px;
     font-size: 30px;
+    font-weight: 700;
 }
 
 
@@ -12,11 +13,14 @@ h2{
     height: 100%;
     background-color:#c7cfdf;
     min-width: min-content;
+    margin-right: 0px;
 }
 .mainscreen{
+	padding-left: 10px;
 	float: right;
     width: 75%;
     height: auto;
+
 }
 
 #side{
@@ -28,7 +32,6 @@ h2{
 }
 
 #side li{
-      border-top: 7px solid #c7cfdf;
     padding: 5px 1%;
     border-radius: 15px;
     margin: 15px 5px;
@@ -39,17 +42,19 @@ h2{
 
 
 }
-#side li:hover{
-	color: white;
-	background-color: black;
+.list-group li:hover{
+	cursor: pointer;
+	filter: brightness(85%);
 }
-#up li:hover{
-	color: white;
-	background-color: black;
+a {
+	text-decoration: none;
+	color: inherit;
 }
+
 body {
 	font-family: sans-serif;
 	margin: 0px;
+	    background-color: whitesmoke;
 }
 #up{
 	float: right;
@@ -66,3 +71,43 @@ body {
 	font-size: 24px;
 	color: white;
 	}
+#up_2{
+	float: right;
+	 width: 75%;
+	 padding: 0 0;
+	 margin:0px;
+	 background-color: #2c2c60;
+	 text-align: left;
+
+}
+#up_2 li{
+	display: inline-flex;
+	    padding: 5 15px;
+	font-size: 24px;
+	color: white;
+	}
+
+.card{
+	height:15em;
+	margin: 5px;
+	
+	width: 90%;
+}
+.col {
+	padding: 0px;
+}
+
+#card1{
+	width:16.2em;
+	
+}
+#card2{
+	width:35em;
+	
+}
+.card-img-top{
+	height:200px;
+	width: 200px;
+	padding: 10px;
+	align-self: center;
+}
