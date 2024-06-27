@@ -50,24 +50,25 @@
 
 .flex-container {
     display: flex;
-    height: 600px;
+    height: 100%;
     border: 0;
+
     
 }
 
 .flex-child {
     flex: 1;
     border: 0px solid yellow;
-    height: 620px;
+    height: 100vh;
     background-color: #e6e6e6;
     overflow: hidden;
 }  
 
 .cropped-ofp {
     width: 100%;
-    height: auto;
+    height: 100vh;
     object-fit: cover;
-    object-position: 25% 25%;
+    object-position: 0% 0%;
 }
 #click{
   border: none;
@@ -78,4 +79,6 @@
     color: gray;
 }
 #input {height: 28px; font-size: 10px; padding: 7px 5px;}
-#body{margin:0px}
+#body{margin:0px;
+
+}
