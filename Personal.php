@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="_CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="CSS/styles.css?v=1.1">
-
+<link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
 <div>
 	<div class="upperbar">
 <?php require_once('Common/upperbar.php') ?>
