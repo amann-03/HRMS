@@ -34,7 +34,7 @@
 <div class="flex-container">
 <div class="flex-child 1">
 <h1 id="heading">LOGIN</h1>
-<form action ="" method="post">
+<form action ="dashboard.php" method="post">
 <div class="block">
 <div>
 	<input type="email" name="User_mail" class="element" values="" placeholder="Username"required>
