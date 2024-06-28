@@ -3,15 +3,8 @@
 $username = "root";
 $password = "";
 $server = 'localhost';
-$db = 'hrms';
+$db = 'hr portal';
 
 $conn = mysqli_connect($server,$username,$password,$db);
 
-if($conn){
-	echo "COnnection Successful";
-}
-else{
-	die("No connection ".mysqli_connect_error);
-}
-
- ?>
+?>
