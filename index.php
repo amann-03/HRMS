@@ -60,5 +60,27 @@
 </body>
 </html>
 
+<?php require_once('popup.php');
 
+	if(isset($_POST['forget_pass'])){
+
+		$user_email = $_POST['User_mail'];
+
+		$new_pass = rand(1000,10000);
+		$update_query = "update `employee` set `password` = $new_pass where `login_id` = '$user_email'";
+
+		mysqli_query($conn, $update_query);
+
+		$to_email = $user_email;
+
+		$subject = "Forget Password : HRMS";
+
+		$body = "Hi, greetings from HRMS team.\nYour new password : $new_pass\n\n Stay updated.";
+
+		$headers = "From: aman030904@gmail.com";
+		mail($to_email, $subject, $body, $headers);
+		
+	}
+		
+?>
 
