@@ -14,23 +14,58 @@
 <div class="container text-center">
 <div class="row">
 <div class="col"><div class="col">
- <div class="card"id ="card1"  style="height: 490px;">
- 	<img class="card-img-top" src="Photo/image 5.png" alt="Card image cap">
+ <div class="card"id ="card1"  style="height: 80vh;">
+ 			<img class="card-img-top" src="Photo/image 5.png" alt="Card image cap">
 	<div class="card-body">
-		card 6
+				<p class="fw-bolder">Name<?php$name?></p>
+				<span class="title">at work for <?php$join-$current?></span>
 	</div>
 </div></div></div>
 	
 <div class="col"><div class="row">
-	 <div class="card" id="card2">
-		<div class="card-body">
-			card 5
+	 <div class="card" id="card2" style="height: 49vh;">
+	 	<span class="personalhead">	Personal Details </span>
+	 	<div class="card-body">
+	 		
+
+
+				<?php
+				$rows=array("Name"=>"#","ID"=>"#","Date of Birth"=>"#","Gender"=>"#","Email"=>"#","Phone no."=>"#","address"=>"#");
+				?>
+
+					<table style="width: 100%;">
+				<?php
+				foreach ($rows as $key => $value): ?>
+					  <tr id="<?= $key ?>">
+					    <th><?= $key ?></th>
+					    <td><?= $value ?></td>
+					  </tr>
+					  <?php endforeach; ?>
+					</table>
+
 		</div>
 	</div></div>
 	<div class="row">
-	 <div class="card" id="card2">
-		<div class="card-body">
-			card 5
+	 <div class="card" id="card2" style="height: 30vh;">
+		<span class="personalhead"> Company Details </span>
+	 	<div class="card-body">
+	 		
+
+
+				<?php
+				$rows=array("Department"=>"#","postion"=>"#","status"=>"#","project"=>"#");
+				?>
+
+					<table style="width: 100%;">
+				<?php
+				foreach ($rows as $key => $value): ?>
+					  <tr id="<?= $key ?>">
+					    <th><?= $key ?></th>
+					    <td><?= $value ?></td>
+					  </tr>
+					  <?php endforeach; ?>
+					</table>
+
 		</div>
 	</div>
 </div>

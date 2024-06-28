@@ -33,18 +33,11 @@
 </div></div>
 	
 <div class="col"><div class="row">
-	 <div class="card" id="card2">
+	 <div class="card" id="card2" style="height:79vh">
 		<div class="card-body">
 			meeting stat
 		</div>
 	</div></div>
-	<div class="row">
-	 <div class="card" id="card2">
-		<div class="card-body">
-			celebration this month
-		</div>
-	</div>
-</div>
 </div>
 </div>
 </div>
