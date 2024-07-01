@@ -12,18 +12,18 @@
 .element {
     background-color: whitesmoke;
     width: 65%;
-    margin: 28px;
-    height: 60px;
+    margin: 4vh;
+    height: 8vh;
     padding-left: 7%;
     padding-right: 5%;
     border-radius: 15px;
     border-color: #7f8cad;
-    font-size: 20px;
+    font-size: 3vh;
 }
 #submit {
     background-color: #333e5b;
     width: 75%;
-    margin: 35px;
+    margin: 7vh;
 
     height: 55px;
     border :0px;
@@ -41,7 +41,7 @@
     font-size: larger;
     font-family: sans-serif;
     font-weight: 600;
-    padding: 20px;
+    padding: 5vh;
     object-fit: cover;
 }
 ::placeholder{
@@ -58,7 +58,7 @@
 .flex-child {
     flex: 1;
     border: 0px solid yellow;
-    height: 620px;
+    height: 100vh;
     background-color: #e6e6e6;
     overflow: hidden;
 }  
