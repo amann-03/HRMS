@@ -64,7 +64,7 @@ require_once('config.php');
 <div>
 	<input type="Password" name="User_password" class="element" values=""placeholder="Password">
 </div>
-<div><button type="submit" name="forget_pass"style="scale:1.3 ;"class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">Forgot password</button></div>
+<div><button type="submit" name="forget_pass"style="scale:1.3 ;"class="btn btn-outline-dark">Forgot password</button></div>
 <div>
 	<input type="submit" name="form_submit" id="submit" value='Sign In'>
 </div>
@@ -82,12 +82,32 @@ require_once('config.php');
 
 </body>
 </html>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+        <p>Message with Login Credentials has been sent to your mail</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div>
 
 <?php 
 
 	if(isset($_POST['forget_pass'])){
 
-		require_once('popup.php');
+		// require_once('popup.php');
 		$user_email = $_POST['User_mail'];
 
 		$new_pass = rand(1000,10000);
@@ -102,8 +122,16 @@ require_once('config.php');
 		$body = "Hi, greetings from HRMS team.\nYour new password : $new_pass\n\n Stay updated.";
 
 		$headers = "From: aman030904@gmail.com";
-		mail($to_email, $subject, $body, $headers);
+		$mp = mail($to_email, $subject, $body, $headers);
 		
+		if($mp){
+			?>
+			<script type="text/javascript">
+  $('#myModal').modal('show'); 
+</script>
+<?php
+
+		}
 		unset($_SESSION['employee_id']);
  		unset($_SESSION['login_id']);
  		session_destroy();
