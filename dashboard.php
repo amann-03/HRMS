@@ -18,15 +18,21 @@
 <div class="row">
 
 <div class="col"> <div class="card"id ="card1">
-	<div class="card-body">
-		card 6
-	</div>
+		<div class="chart_container"><?php require_once('charts/Pie_chart_Dashboard.php') ?></div>
+		
 </div>
 </div>
 	<div class="col"> <div class="card" id="card2">
-		<div class="card-body">
-			card 5
+		<div class="chart_container"><?php require_once('charts/dash_Bar.php') ?></div>
+		 <div>
+         <ul class="list-group" id="dashboardlist">
+			<li class="list-group-item">Project Name :</li>
+			<li class="list-group-item">Client Name :</li>
+			<li class="list-group-item">Domain :</li>
+         
 		</div>
+         
+        
 	</div>
 </div>
 </div>
