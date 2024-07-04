@@ -4,10 +4,31 @@
 <body>
 
  <canvas id="graph" aria - label="chart" height="50px" width="100px"></canvas>
+ <?php 
+      $stat = "SELECT deadline,any_rewards from project join project_employees on project.project_id = project_employees.project_id where employee_id = ".$_SESSION['employee_id'];
+
+      $res = mysqli_query($conn, $stat);
+
+      $ongoing = 0;
+      $rewarded = 0;
+      $not_rewarded = 0;
+      
+      while($run = mysqli_fetch_object($res)){
+
+        if($run->deadline > date('Y-m-d')) $ongoing++;
+        else{
+            if($run->any_rewards == "Rewarded") $rewarded++;
+            else $not_rewarded++;
+          }
+
+      }
+
+
+  ?>
 
 <script>
-var xValues = ["No. of projects assigned", "No. of projects completed","No. of projects ongoing"];
-var yValues = [20,15,13];
+var xValues = ["No. of projects ongoing", "No. of projects rewarded","No. of projects not_rewarded"];
+var yValues = [<?php echo $ongoing; ?>,<?php if($rewarded) echo $rewarded; ?>,<?php if($not_rewarded) echo $not_rewarded; ?>];
 var barColors = [
   "rgba(23, 232, 145, 1)",
   "rgba(25,190,220,1)",
