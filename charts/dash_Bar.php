@@ -2,11 +2,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <body>
 
- <canvas id="graph2" aria - label="chart" height="250px" width="400px"></canvas>
+ <canvas id="graph2" aria - label="chart" height="240px" width="400px"></canvas>
 
 <script>
-var xValues = ["", "","",""];
-var yValues = [20,15,13,9,0];
+var xValues = ["", "","","","","",];
+var yValues = [20,15,13,12,11,9,0];
 var barColors = [
   "rgba(232, 232, 145, 1)",
   "rgba(251,190,220,1)",
@@ -33,14 +33,25 @@ var barColors = [
     }]
   },
   options:{
-    responsive: false,
+    responsive: true,
     legend:{
       display:false,
       position:'right',
       align:'start'
-    }  
-            
+    },
+   scales:{
+    yAxes:[{
+      display:true,
+      gridLines: {
+                display:true
+            },
 
+    }],
+    xAxes:[{
+      display:false
+    }],
+
+   },
 
   }
 });
