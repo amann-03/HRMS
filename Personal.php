@@ -14,17 +14,26 @@
 <div class="container text-center">
 <div class="row">
 <div class="col"><div class="col">
- <div class="card"id ="card1"  style="height: 80vh;">
+ <div class="card"id ="card1"  style="height: 83vh;">
  			<img class="card-img-top" src="Photo/image 5.png" alt="Card image cap">
 	<div class="card-body">
-				<p class="fw-bolder">Name<?php$name?></p>
-				<span class="title">at work for <?php$join-$current?></span>
+				<h3 class="fw-bolder">Name<?php$name?></h3>
+				<br>
+				<span class="title">at work for : <?php$join-$current?></span>
+				<br>
+				<h3>Team Members<h3>
+				<ul class="list-group" id="projectlist">
+					<br>
+			<li class="list-group-item">Person1</li>
+			<li class="list-group-item">Person2</li>
+			<li class="list-group-item">Person3</li>
+		</ul>
 	</div>
 </div></div></div>
 	
 <div class="col"><div class="row">
 	 <div class="card" id="card2" style="height: 49vh;">
-	 	<span class="personalhead">	Personal Details </span>
+	 	<span class="personalhead" id="personalhead2">	Personal Details </span>
 	 	<div class="card-body">
 	 		
 
@@ -46,8 +55,8 @@
 		</div>
 	</div></div>
 	<div class="row">
-	 <div class="card" id="card2" style="height: 30vh;">
-		<span class="personalhead"> Company Details </span>
+	 <div class="card" id="card2" style="height: 32vh;">
+		<span class="personalhead" id="personalhead3"> Company Details </span>
 	 	<div class="card-body">
 	 		
 
