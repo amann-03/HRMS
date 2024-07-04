@@ -1,3 +1,8 @@
+<?php session_start();
+require_once('connection.php');
+
+if (isset($_SESSION['employee_id'])) { ?>
+
 <link rel="stylesheet" type="text/css" href="_CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="CSS/styles.css?v=1.1">
 <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
@@ -30,11 +35,20 @@
 	<span class="personalhead">	Project Details </span>
 	<div class="card-body">
 		<ul class="list-group" id="projectlist">
-			<li class="list-group-item">Project Name :</li>
-			<li class="list-group-item">Client Name :</li>
-			<li class="list-group-item">Domain :</li>
-			<li class="list-group-item">Budget :</li>
-			<li class="list-group-item">Details :</li>
+<?php 
+
+	$stat1 = "SELECT project_name, deadline, client, budget from project_employees join project on project_employees.project_id = project.project_id where employee_id = ".$_SESSION['employee_id']." and deadline > ".date('d-m-Y');
+
+	$run_query = mysqli_query($conn, $stat1); 
+	$row = mysqli_fetch_object($run_query);
+	$dt = date('Y-m-d', strtotime($row->deadline));
+
+ ?>
+			<li class="list-group-item">Project Name : <?php echo $row->project_name; ?></li>
+			<li class="list-group-item">Client Name : <?php echo $row->client; ?></li>
+			<li class="list-group-item">Deadline : <?php echo $row->deadline ?></li>
+			<li class="list-group-item">Budget : <?php echo $row->budget ?></li>
+			<li class="list-group-item">Remaining Time: </li>
 		</ul>
 	</div>
 </div>
@@ -42,8 +56,8 @@
 	
 </div>
 <div class="row">
-	<div style="display: block;"><form class="example" action="action_page.php">
-		<input type="text" placeholder="Search.." name="search">
+	<div style="display: block;"><form class="example" action="" method = "get">
+		<input type="text" placeholder="Search.." name="search" required>
 		<button type="submit"><i class="fa fa-search"></i></button>
 	</form></div>
 </div>
@@ -55,26 +69,57 @@
 	<div class="scrollable">
 		<table class="table table-bordered text-center">
 			<thead>
-				<tr style="background-color: pink;">
-					<th>#</th>
+				<tr>
+					<th>Project Id</th>
 					<th>Project Name</th>
 					<th>Role</th>
 					<th>Due Date</th>
 					<th>Status</th>
+					<th>Reward</th>
 				</tr>
 				
 			</thead>
+			<?php if(!isset($_GET['search'])){ ?>
 			<tbody>
-			<?php for ($x = 0; $x <= 10; $x++) {?>
+			<?php 
+
+				$stat2 = "SELECT project.project_id, any_rewards, project_name, deadline from project join project_employees on project.project_id = project_employees.project_id where employee_id = ".$_SESSION['employee_id'] ;
+
+				$run_query2 = mysqli_query($conn, $stat2); 
+
+				while($row2 = mysqli_fetch_object($run_query2)){?>
 			<tr>	
-				<td>hi</td>
-				<td>helo</td>
+				<td><?php echo $row2->project_id ?></td>
+				<td><?php echo $row2->project_name ?></td>
 				<td></td>
-				<td></td>
-				<td></td>
+				<td><?php echo $row2->deadline ?></td>
+				<td><?php if($row2->deadline < date('Y-m-d')) echo "Completed"; else echo "Ongoing"; ?></td>
+				<td><?php if($row2->any_rewards) echo "Rewarded"; else echo "Not rewarded"; ?></td>
 			</tr>
 			<?php }?>
 			</tbody>
+			<?php }else{ ?>
+			<tbody>
+			<?php 
+
+				$filtervalues = $_GET['search'];
+
+				$stat2 = "SELECT project.project_id, any_rewards, project_name, deadline from project join project_employees on project.project_id = project_employees.project_id where employee_id = ".$_SESSION['employee_id']." and CONCAT(project_name) LIKE '%$filtervalues%'" ;
+
+				$run_query2 = mysqli_query($conn, $stat2); 
+
+				while($row2 = mysqli_fetch_object($run_query2)){?>
+			<tr>	
+				<td><?php echo $row2->project_id ?></td>
+				<td><?php echo $row2->project_name ?></td>
+				<td></td>
+				<td><?php echo $row2->deadline ?></td>
+				<td><?php if($row2->deadline < date('Y-m-d')) echo "Completed"; else echo "Ongoing"; ?></td>
+				<td><?php echo $row2->any_rewards; ?></td>
+			</tr>
+			<?php } }?>
+			</tbody>
+
 		</table></div>
 			</div>
 		</div>
@@ -83,3 +128,11 @@
 </div>
 </div>
 </div>
+
+<?php 
+} 
+else{
+  header('location:index.php');
+}
+
+?>
