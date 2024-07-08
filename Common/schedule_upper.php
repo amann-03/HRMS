@@ -9,7 +9,7 @@
 	<li class="iist-group-item"><a href="attendance.php"class="list-group-item <?php if(basename($_SERVER['PHP_SELF'])=="attendance.php"){echo "active";}
 	  else {echo "";}?>">Attendance</a>
   </li>
-	<li class="iist-group-item"><a href=""class="list-group-item <?php if(basename($_SERVER['PHP_SELF'])==""){echo "active";}
+	<li class="iist-group-item"><a href="Leaves.php"class="list-group-item <?php if(basename($_SERVER['PHP_SELF'])=="Leaves.php"){echo "active";}
 	  else {echo "";}?>">Leaves</a>
   </li>
 	
