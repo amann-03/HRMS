@@ -4,7 +4,11 @@ h2{
     font-size: 4vh;
     font-weight: 700;
 }
-
+h3{
+	font-size: 3.5vh;
+    padding-bottom: 0vh;
+    font-weight: 700;
+}
 html{
 	overflow: hidden;
 
@@ -186,7 +190,7 @@ table{
 	width: 100%;
 }
 tr{    font-size: 3vh;
-    width: inherit;
+    width:fit-content;
 }
 
 td{  padding-left: 15px;
@@ -196,7 +200,7 @@ td{  padding-left: 15px;
 	}
 
 th  {
-  border-right:2px solid grey;
+/*  border-right:2px solid grey;*/
   width: 14vw;
   font-size: 2.5vh;
   padding:5px;
@@ -269,7 +273,7 @@ form.example button:hover {
 text-align: left; font-size: 2.5vh;font-weight: 500;padding-left: 1vw;
 }
 #projectlist li{
-	padding: 2vh; margin-left: 2vh;
+	 margin-left: 2vh;
 }
 #graph2{
 	scale: 1;
@@ -305,13 +309,12 @@ text-align: left; font-size: 2.5vh;font-weight: 500;padding-left: 1vw;
 }
 .attmark{
     padding: 3vw;
-    font-size: 3.5vh;
+    font-size: 3vh;
     font-weight: 700;
     width: 100%;
-    height: 50%;
+    height: 45%;
 }
 #mark{
-	margin :3vh;
 	font-size: 3vh;
 	width: 10vw;
 	color: Black;
@@ -325,4 +328,21 @@ text-align: left; font-size: 2.5vh;font-weight: 500;padding-left: 1vw;
 }
 .chart_in{
 	font-size: 150%;
+}
+.status{
+	color: #a3af37;
+	font-weight: 700;
+}
+.ok{
+	color: green;
+}
+.reject{
+	color: crimson;
+}
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: inline-block;
 }
