@@ -2,8 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <body>
- <?php $van1=10; ?>
-<?php $man1=7; ?>
+
 <div style="width: 100%;
   height: 100%;
   position: absolute;
@@ -12,13 +11,13 @@
   z-index: -1;
   ">
 <h4 class="chart_in"><?php echo $man1?></h4>
-<h4 class="chart_in">/<?php echo $van1 + $man1;?></h4>
+<h4 class="chart_in">/<?php echo $total;?></h4>
 </div>
 
 
 <script>
 var xValues = ["Taken", "Remaining"];
-var yValues = [<?php echo $man1;?> ,<?php echo $van1;?> ];
+var yValues = [<?php echo $man1;?> ,<?php echo $total - $man1;?> ];
 
 // graph.defaults.font.size = 16;
  
