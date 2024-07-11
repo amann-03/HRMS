@@ -1,3 +1,9 @@
+<?php session_start();
+
+require_once('connection.php');
+if (isset($_SESSION['employee_id'])) {
+ ?>
+
 <link rel="stylesheet" type="text/css" href="_CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="CSS/styles.css?v=1.1">
 <link rel="stylesheet" type="text/css" href="calendar/calendar.css?v=1.1">
@@ -23,18 +29,40 @@
 <div class="col"><div class="col">
  <div class="listcontainer">
  	<div class="attmark">Mark Your Attendance</div>
+ 	<?php $colors = ['Pending'=>'grey','Approved'=>'green','Late Punch-in'=>'Red']; ?>
  	<?php
-		if (isset($_POST['mark'])){
-			 echo "<h3>Attendance Marked</h3>";?>
-			 <br>
-			<h3>Status:<h3>
-			<div style="color:"> <?php echo "Pending" ?> </div>
-	<?php	}
-		else{
-		?>
-		<form action="" method="post"><button name="mark" type="submit" class="btn btn-info" id="mark">Mark</button></form>
-		<?php }?>
 
+ 		$dt = date('Y-m-d');
+ 		$stat = "SELECT status from attendance where employee = ".$_SESSION['employee_id']." and date_attendance = '$dt'";
+		$quer = mysqli_query($conn, $stat);
+		$run = mysqli_fetch_object($quer);
+
+		if($quer->num_rows > 0){
+			?><br>
+			<h3>Status:<h3>
+			<div style="color: <?php echo $colors[$run->status]; ?>"> <?php echo $run->status; ?> </div>
+
+
+		<?php }
+
+		else{
+
+			?> <form action="" method="post"><button name="mark" type="submit" class="btn btn-info" id="mark">Mark</button></form>
+			<?php  
+				if(isset($_POST['mark'])){
+
+					date_default_timezone_set('Asia/Calcutta');
+					 echo "<h3>Attendance Marked</h3>";
+
+					 $tim = date('h:i:s');
+
+					$stat = "INSERT INTO attendance(employee, status, date_attendance, punch_in_time) VALUES (".$_SESSION['employee_id'].", 'Pending', '".$dt."', '".$tim."' )";	
+
+					$quer = mysqli_query($conn, $stat);
+					header('location: attendance.php');
+				}
+		}
+			 ?>
 		
 </div>
 <div class="card"id ="card1" >
@@ -48,13 +76,24 @@
           </div>
           <br>
         <div>
-          <button name="mark" type="submit" class="btn btn-info" id="mark">Submit</button>
+          <button name="remark" type="submit" class="btn btn-info" id="mark">Submit</button>
         </div>
         </form>
 	</div>
 </div>
 </div></div>
 	
+	<?php 
+		if(isset($_POST['remark'])){
+			$rem = $_POST['Rem'];
+
+			$dt = date('Y-m-d');
+			$stat = "UPDATE attendance set remark = '".$rem."' where employee = ".$_SESSION['employee_id']." and date_attendance = '$dt'";
+
+			$quer = mysqli_query($conn, $stat);
+		}
+	 ?>
+
 <div class="col"><div class="row">
 	 <div class="card" id="card2" style="height:79vh">
 			<?php require_once("calendar/calendar_show.php")?>
@@ -66,3 +105,8 @@
 
 	
 
+<?php }
+else{
+	header('location:index.php');
+}
+?>
