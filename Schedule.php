@@ -1,5 +1,12 @@
+<?php session_start();
+
+require_once('connection.php');
+if (isset($_SESSION['employee_id'])) {
+ ?>
+
 <link rel="stylesheet" type="text/css" href="_CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="CSS/styles.css?v=1.1">
+<link rel="stylesheet" type="text/css" href="CSS/scroll.css?v=1.1">
 <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
 <script src="jquery-3.7.1.js"></script>
 
@@ -11,7 +18,12 @@
  <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 
+<?php 
 
+		$stat = "SELECT cl, sl,pl,hl from leave_type where emp_id = ".$_SESSION['employee_id'];
+        $quer = mysqli_query($conn, $stat);
+
+ ?>
 
 <div>
 	<div class="upperbar">
@@ -51,33 +63,73 @@
 		<div class="chart_container"> 
 			<canvas id="graph3" height="350px" width="450px"></canvas>
 			<script>var chrt = document.getElementById("graph3").getContext('2d');</script>
-			<?php require_once('charts/total_leaves.php') ?></div>
+			<?php 
+
+				$total = 20;
+				if($quer->num_rows > 0){
+
+					$run = mysqli_fetch_object($quer);
+
+			        $cl = $run->cl;
+			        $sl = $run->sl;
+			        $hl = $run->hl;
+			        $pl = $run->pl;
+
+					$man1 = $cl + $sl + $hl + $pl;
+				}
+
+				else $man1 = 0;
+			require_once('charts/total_leaves.php') ?></div>
 	</div>
 </div>
 </div></div>
 	
 <div class="col"><div class="row">
 	 <div class="card" id="card2">
-	 		<h3>Scheduled Meetings</h3>
+	 		<h3 style="text-align:left ; padding-left: 2vw; padding-top: 1vh">Scheduled Meetings</h3>
 		
-			
+		<?php 
+
+			$stat = "SELECT agenda, meet_time, duration from meeting_project join project_employees on project_employees.employee_id = ".$_SESSION['employee_id']." and project_employees.project_id = meet_proj_id order by meet_time DESC" ;
+			$run = mysqli_query($conn, $stat);
+			$dt = date('d-m-y h:i:s');
+
+		 ?>
 					<div class="scrollable" style=" height: 30vh; ">
 		<table class= "table" style="text-align: center;" >
-		<thead class="table-dark">
+		<thead class="table-primary">
 				<tr>
-					<th style="width:0vw" >date</th>
-					<th>Name</th>
+					<th style="width:0vw" >Date</th>
+					<th>Agenda</th>
 					<th>Time</th>
+					<th>Duration</th>
+					<th>Status</th>
 					
 				</tr>
 				
 			</thead>
 			<tbody>
-			<?php for ($x = 0; $x <= 10; $x++) {?>
+			<?php while($row = mysqli_fetch_object($run)){?>
 			<tr>
-				<td><?php echo date("d/m/y") ?></td>
-			    <td >Meeting</td>	
-				<td>Time</td>
+				<td><?php echo date('d/m/y', strtotime($row->meet_time));?></td>
+			    <td ><?php echo $row->agenda; ?></td>	
+				<td><?php echo date('h:i:s', strtotime($row->meet_time)); ?></td>
+				<td><?php echo $row->duration ?></td>
+				<td><?php  
+					// $data = $row->meet_time;
+
+					$copy = date('d-m-y h:i:s', strtotime($row->meet_time));
+					$hours = $row->duration / 60;
+					$min = $row->duration%60;
+					$add = date('d-m-y h:i:s', strtotime($copy. ' + '.$hours.' hours + '.$min.' minutes'));
+					echo $add;
+					// die();
+
+					// $data->add(new DateInterval('PTH'.$hours.'M'.$min.'S0')); 
+					if($dt < $copy) echo "Upcoming";
+					else if($add > $dt) echo "Started";
+					else echo "Completed";
+			?></td>
 							</tr>
 			<?php }?>
 			</tbody>
@@ -86,11 +138,11 @@
 	</div></div>
 	<div class="row">
 	 <div class="card" id="card2">	
-	 	<h3>Notices this month</h3>
+	 	<h3 style="text-align:left ; padding-left: 2vw; padding-top: 1vh">Notices</h3>
 			
 			<div class="scrollable" style="display: flex; height: 30vh; ">
 		<table class= "table table-striped table-hover" style="text-align: center;" >
-			<thead class="table-dark">
+			<thead class="table-primary">
 				<tr >
 					
 					<th>Title</th>
@@ -104,8 +156,8 @@
 			<?php for ($x = 0; $x <= 10; $x++) {?>
 			<tr >
 			    <td>
-			    	<button dataid= "<?php echo $x; ?>" data-toggle="modal" data-target="#myModal" class= "view_detail" style="font-weight: 700; border: 0px;">
-			    Emergency Meeting</button>
+			    	<a dataid= "<?php echo $x; ?>" data-toggle="modal" data-target="#myModal" class= "view_detail" style="font-weight: 700; border: 0px; cursor: pointer;">
+			    Emergency Meeting</a>
 			</td>	
 				<td>hi</td>
 				<td></td>
@@ -145,9 +197,9 @@
  document.getElementById("Notice")
                 .innerHTML = NoticeId ;
   document.getElementById("myModalLabel")
-                .innerHTML += " Title";
+                .innerHTML = " Title";
    document.getElementsByClassName("time")
-                  .innerHTML += "Time";
+                  .innerHTML = "Time";
 });
 
 
@@ -155,3 +207,8 @@
   	</script>
 	
 
+<?php }
+else{
+	header('location:index.php');
+}
+?>
