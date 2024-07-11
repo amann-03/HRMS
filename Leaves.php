@@ -1,5 +1,6 @@
 <?php session_start();
 
+ob_start();
 require_once('connection.php');
 if (isset($_SESSION['employee_id'])) {
  ?>
@@ -30,15 +31,21 @@ if (isset($_SESSION['employee_id'])) {
 
 				$stat = "SELECT cl, sl,pl,hl,lwp from leave_type where emp_id = ".$_SESSION['employee_id'];
 				$quer = mysqli_query($conn, $stat);
-				$run = mysqli_fetch_object($quer);
-
-				$cl = $run->cl;
-				$sl = $run->sl;
-				$hl = $run->hl;
-				$pl = $run->pl;
-				$lwp = $run->lwp
-
-
+				if($quer->num_rows > 0) {
+					$run = mysqli_fetch_object($quer);
+					$cl = $run->cl;
+					$pl = $run->pl;
+					$sl = $run->sl;
+					$hl = $run->hl;
+					$lwp = $run->lwp;
+				}
+				else{
+					$cl = 0;
+					$sl = 0;
+					$pl = 0;
+					$hl = 0;
+					$lwp = 0;
+				}
 
 			 ?>
 			
@@ -55,6 +62,7 @@ if (isset($_SESSION['employee_id'])) {
 							<canvas id="graph4" height="350px" width="450px"></canvas>
 							<script>var chrt = document.getElementById("graph4").getContext('2d');</script>
 						<?php 
+
 							$man1 = $cl;
 							$total = 5;
 
@@ -74,7 +82,7 @@ if (isset($_SESSION['employee_id'])) {
 						<canvas id="graph5" height="350px" width="450px"></canvas>
 						<script>var chrt = document.getElementById("graph5").getContext('2d');</script>
 					<?php 
-						$man1 = $pl;
+							$man1 = $pl;
 							$total = 5;
 
 					include('charts/total_leaves.php') ?></div>
@@ -93,7 +101,7 @@ if (isset($_SESSION['employee_id'])) {
 					<canvas id="graph6" height="350px" width="450px"></canvas>
 					<script>var chrt = document.getElementById("graph6").getContext('2d');</script>
 				<?php 
-					$man1 = $hl;
+							$man1 = $hl;
 							$total = 5;
 				include('charts/total_leaves.php') ?></div>
 			</div>
@@ -111,7 +119,7 @@ if (isset($_SESSION['employee_id'])) {
 				<canvas id="graph7" height="350px" width="450px"></canvas>
 				<script>var chrt = document.getElementById("graph7").getContext('2d');</script>
 			<?php 
-				$man1 = $sl;
+					$man1 = $sl;
 					$total = 5;
 			include('charts/total_leaves.php') ?></div>
 		</div>
@@ -129,6 +137,14 @@ if (isset($_SESSION['employee_id'])) {
     height: 3.5vh;
     padding-top: 0;"class="btn btn-success" data-toggle="modal" data-target="#Modal"><h5 class="fw-normal">Request Time Off</h5></button></span>
 
+    <?php 
+
+	    $stat = "SELECT start_date, end_date, status, type from leave_requests where employee_id = ".$_SESSION['employee_id']." order by start_date DESC ";
+	    $run = mysqli_query($conn, $stat);
+
+	    $colors = ['Pending'=>'grey','Approved'=>'green','Rejected'=>'Red'];
+     ?>
+
 	<div class="scrollable">
 		<table class="table text-center table-hover">
 			<thead>
@@ -142,27 +158,24 @@ if (isset($_SESSION['employee_id'])) {
 				
 			</thead>
 			<tbody>
-			<?php for ($x = 0; $x <= 10; $x++) {?>
+			<?php while($row = mysqli_fetch_object($run)){?>
 			<tr>	
-				<td>hi</td>
-				<td>helo</td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><?php echo $row->start_date; ?></td>
+				<td><?php echo $row->end_date; ?></td>
+				<td><?php echo $row->type; ?></td>
+				<td style="color:<?php echo $colors[$row->status];  ?>"><?php echo $row->status; ?></td>
 			</tr>
 			<?php }?>
 			</tbody>
 		</table></div>
 
-
-
-
-
 	</div>
 </div>
+
+
 <div class="col">
 	<div class="card" id="card1" style="height:44vh; width:17vw;">
-		<span class="personalhead" id="personalhead2">XYZ</span>
+		<span class="personalhead" id="personalhead2">Recents</span>
 		<div>
 			<br>
 			Leave without Pay 
@@ -175,11 +188,16 @@ if (isset($_SESSION['employee_id'])) {
 		
 		<div>
 			<br>
-			Recent Leave Date :
+			Latest Leave Date :
 			<br>
 			<h2><?php
-			$date = new DateTime("2023-07-08");
-			echo $date->format("d-m-y");?><h2>
+
+				$stat = "SELECT start_date from leave_requests where employee_id = ".$_SESSION['employee_id']." and status = 'Approved' order by start_date DESC LIMIT 1";
+				$run = mysqli_query($conn, $stat);
+				$row = mysqli_fetch_object($run);
+
+			$date = $row->start_date;
+			echo $date;?><h2>
 		</div>
 	</div>
 </div>
@@ -205,10 +223,10 @@ if (isset($_SESSION['employee_id'])) {
 			<div>
 				<select id="Leave" name="Leave" class="input_div" required>
 					<option hidden disabled selected value> -Select An Option- </option>
-					<option value="cl">Casual Leave</option>
-					<option value="sl">Sick Leave</option>
-					<option value="hl">Half Leave</option
-					<option value="pl">Paid Leave</option>
+					<option value="Casual">Casual Leave</option>
+					<option value="Sick ">Sick Leave</option>
+					<option value="Half">Half Leave</option>
+					<option value="Paid">Paid Leave</option>
 					<option value="lwp">Leave without Pay</option>
 				</select>
 			</div>
@@ -247,11 +265,11 @@ if (isset($_SESSION['employee_id'])) {
 		$reason  = $_POST['reason'];
 		$type  			 = $_POST['Leave'];
 
-		$stat = "INSERT INTO leave_requests (employee_id, status, start_date, end_date, reason, type) VALUES (".$_SESSION['employee_id']." ,'Pending' ,'".$start."', '".$end."', '".$reason."', '".$type."')";
+		$stat = "INSERT INTO leave_requests (employee_id, status, start_date, end_date, reason, type) VALUES (".$_SESSION['employee_id']." ,'Pending' ,'".$start."', '".$end."', '".$reason."', '".$type."' )";
 
 
 		$quer = mysqli_query($conn, $stat);
-		
+		header('location:Leaves.php');
 	}
 
 
