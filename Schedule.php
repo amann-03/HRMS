@@ -1,13 +1,13 @@
 <link rel="stylesheet" type="text/css" href="_CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="CSS/styles.css?v=1.1">
 <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
-
+<script src="jquery-3.7.1.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
  <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 
@@ -103,8 +103,10 @@
 			<tbody>
 			<?php for ($x = 0; $x <= 10; $x++) {?>
 			<tr >
-			    <td><button dataid= "<?php echo $x; ?>" data-toggle="modal" data-target="#myModal" class= "view_detail"style="font-weight: 700; border: 0px;">
-			    Emergency Meeting</button></td>	
+			    <td>
+			    	<button dataid= "<?php echo $x; ?>" data-toggle="modal" data-target="#myModal" class= "view_detail" style="font-weight: 700; border: 0px;">
+			    Emergency Meeting</button>
+			</td>	
 				<td>hi</td>
 				<td></td>
 			</tr>
@@ -118,16 +120,16 @@
 </div>
 </div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog modal-lg" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title" id="myModalLabel">Title</h4>
+									<h4 class="modal-title" id="myModalLabel"></h4>
 								</div>
-								<div id="personDetails" class="modal-body">
-							
+								<div id="Notice" class="modal-body">
+
 								</div>
+								 <div class="time">Time</div> 
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
@@ -137,29 +139,19 @@
 
 <script>
 
-  	$(document).ready(function(){
-  		console.log("haha")
-  		$("#myModal").modal({
-  			keyboard: true,
-  			backdrop: "static",
-  			show: false,
+  	$(".view_detail").click(function () {
+ var NoticeId = $(this).attr("dataid"); 
 
-  		}).on("show.bs.modal", function(event){
-  		  var button = $(event.relatedTarget); // button the triggered modal
-  			var personId = button.data("id");
-  			console.log(personId); //data-id of button which is equal to id (primary key) of person
-  			$(this).find("#personDetails").html($("<b>ID: " + personId ))
-  		}).on("hide.bs.modal", function (event) {
-			$(this).find("#personDetails").html("");
-		});
-		$("#myModal.view_detail").click(function(){
-			console.log("click")
-			var personId = $(this).attr("dataid");
-			console.log(personID);
-  			$(this).find("#personDetails").html("<b>ID: " + personId );
-			})
+ document.getElementById("Notice")
+                .innerHTML = NoticeId ;
+  document.getElementById("myModalLabel")
+                .innerHTML += " Title";
+   document.getElementsByClassName("time")
+                  .innerHTML += "Time";
+});
 
-  	});
+
+
   	</script>
 	
 
