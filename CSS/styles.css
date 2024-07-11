@@ -67,6 +67,7 @@ filter: brightness(110%);
 	cursor: pointer;
 	filter: brightness(70%);}
 a {
+	cursor: pointer;
 	text-decoration: none;
 	color: inherit;
 }
@@ -345,4 +346,9 @@ text-align: left; font-size: 2.5vh;font-weight: 500;padding-left: 1vw;
   border-radius: 50%;
   border: 2px solid black;
   display: inline-block;
+}
+.time{
+	display: inline-flex;
+	flex-direction: row-reverse;
+	padding-right: 3vw;
 }
