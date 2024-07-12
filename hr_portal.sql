@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2024 at 08:02 PM
+-- Generation Time: Jul 02, 2024 at 08:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,16 +35,6 @@ CREATE TABLE `attendance` (
   `total_latepunch` int(11) NOT NULL,
   `total_attendance` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `attendance`
---
-
-INSERT INTO `attendance` (`date`, `employee`, `is_approve`, `punch_in_time`, `total_latepunch`, `total_attendance`) VALUES
-('2024-07-01', 1, 1, '21:26:15', 5, 43),
-('2024-07-02', 2, 1, '20:29:38', 12, 22),
-('2024-07-03', 3, 0, '21:26:15', 34, 43),
-('2024-07-04', 4, 0, '20:29:38', 37, 23);
 
 -- --------------------------------------------------------
 
@@ -99,17 +89,6 @@ CREATE TABLE `customization` (
 CREATE TABLE `dates` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `dates`
---
-
-INSERT INTO `dates` (`date`) VALUES
-('2024-07-01'),
-('2024-07-02'),
-('2024-07-03'),
-('2024-07-04'),
-('2024-07-05');
 
 -- --------------------------------------------------------
 
@@ -306,17 +285,6 @@ CREATE TABLE `leave` (
   `total_leaves` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `leave`
---
-
-INSERT INTO `leave` (`emp_id`, `date`, `total_leaves`) VALUES
-(1, '2024-07-01', 4),
-(2, '2024-07-02', 5),
-(3, '2024-07-03', 1),
-(4, '2024-07-04', 5),
-(2, '2024-07-05', 8);
-
 -- --------------------------------------------------------
 
 --
@@ -330,15 +298,6 @@ CREATE TABLE `leave_type` (
   `lwp` int(11) NOT NULL,
   `hl` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `leave_type`
---
-
-INSERT INTO `leave_type` (`emp_id`, `cl`, `sl`, `lwp`, `hl`) VALUES
-(4, 1, 2, 3, 4),
-(1, 2, 1, 3, 4),
-(3, 2, 34, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -534,7 +493,7 @@ CREATE TABLE `user_conversation` (
 -- Indexes for table `attendance`
 --
 ALTER TABLE `attendance`
-  ADD KEY `date` (`date`,`employee`);
+  ADD PRIMARY KEY (`date`,`employee`);
 
 --
 -- Indexes for table `conversation`
@@ -585,15 +544,13 @@ ALTER TABLE `employee`
 -- Indexes for table `emp_depart`
 --
 ALTER TABLE `emp_depart`
-  ADD KEY `employee_id` (`employee_id`,`department_id`),
-  ADD KEY `emp_depart_ibfk_2` (`department_id`);
+  ADD KEY `employee_id` (`employee_id`,`department_id`);
 
 --
 -- Indexes for table `emp_dep_grp`
 --
 ALTER TABLE `emp_dep_grp`
-  ADD KEY `emp_id` (`emp_id`,`dep_id`),
-  ADD KEY `emp_dep_grp_ibfk_1` (`dep_id`);
+  ADD KEY `emp_id` (`emp_id`,`dep_id`);
 
 --
 -- Indexes for table `emp_proj_grp`
@@ -617,13 +574,13 @@ ALTER TABLE `individual_chats`
 -- Indexes for table `leave`
 --
 ALTER TABLE `leave`
-  ADD KEY `emp_id` (`emp_id`,`date`);
+  ADD PRIMARY KEY (`emp_id`,`date`);
 
 --
 -- Indexes for table `leave_type`
 --
 ALTER TABLE `leave_type`
-  ADD KEY `emp_id` (`emp_id`);
+  ADD PRIMARY KEY (`emp_id`);
 
 --
 -- Indexes for table `meeting_department`
@@ -666,8 +623,7 @@ ALTER TABLE `project`
 -- Indexes for table `project_employees`
 --
 ALTER TABLE `project_employees`
-  ADD KEY `project_id` (`project_id`,`employee_id`),
-  ADD KEY `project_employees_ibfk_2` (`employee_id`);
+  ADD KEY `project_id` (`project_id`,`employee_id`);
 
 --
 -- Indexes for table `project_message`
@@ -726,13 +682,6 @@ ALTER TABLE `project`
 --
 
 --
--- Constraints for table `attendance`
---
-ALTER TABLE `attendance`
-  ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`employee`) REFERENCES `employee` (`employee_id`),
-  ADD CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`date`) REFERENCES `dates` (`date`);
-
---
 -- Constraints for table `department`
 --
 ALTER TABLE `department`
@@ -769,19 +718,6 @@ ALTER TABLE `emp_depart`
 ALTER TABLE `emp_dep_grp`
   ADD CONSTRAINT `emp_dep_grp_ibfk_1` FOREIGN KEY (`dep_id`) REFERENCES `department` (`department_id`),
   ADD CONSTRAINT `emp_dep_grp_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`employee_id`);
-
---
--- Constraints for table `leave`
---
-ALTER TABLE `leave`
-  ADD CONSTRAINT `leave_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`employee_id`),
-  ADD CONSTRAINT `leave_ibfk_2` FOREIGN KEY (`date`) REFERENCES `dates` (`date`);
-
---
--- Constraints for table `leave_type`
---
-ALTER TABLE `leave_type`
-  ADD CONSTRAINT `leave_type_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`employee_id`);
 
 --
 -- Constraints for table `project`
