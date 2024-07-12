@@ -1,0 +1,190 @@
+*{
+    margin: 0;
+    padding: 0;
+    
+
+
+}
+.navbar{
+       height: 60px;
+       width: 99vw;
+       color: white;
+       background-color: #C4CFE1;
+       text-align: right;
+       font-size: larger;
+   margin: 0%;
+   padding: 0%;
+
+       
+       
+
+
+}
+
+#logo{
+    height: 60px;
+    margin-right: 1000px;
+    margin-left: 0px;
+}
+a{
+    color: white;
+    margin-right: 30px;
+    height: 50px;
+    font-size: larger;
+    text-align: center;
+    position:relative;
+    bottom: 25px;
+    text-decoration: none;
+   
+    
+    
+}
+
+#Settings{
+    font-size: larger;
+    background-color: #C4CFE1 ;
+    color: white;
+    border: none;
+    text-align: center;
+    position:relative;
+    bottom: 25px;
+   
+    
+}
+.sidebar{
+background-color: #C4CFE1;
+    width: 250px;
+    height: 669px;
+   
+}
+button{
+    width: 240px;
+    height: 50px;
+    margin: 8px 5px 8px 5px;
+    border-radius:5px;
+    font-size: larger;
+    border: none;
+
+}
+#overview{
+    margin-top: 10px;
+}
+#logout{
+    margin-top: 130px;
+}
+#per{
+   background-color: black;
+   color: white;
+   border: 5px solid white;
+   
+}
+#content{
+position: absolute;
+top:8.2vh;
+left: 16.3vw;
+width:83.7vw;
+height:91.7vh;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+background-color: #F1F3FB;
+
+
+
+    
+}
+#box1{
+    height:6vh;
+    width: 10vw;
+    background-color: rgb(6, 6, 6);
+    position: relative;
+    right: 0vw;
+    display: flex;
+    justify-content: center;
+}
+#box2{
+    height:6vh;
+    width: 10vw;
+    background-color: rgb(77, 77, 77);
+    position: relative;
+   
+    right: 0vw;
+display: flex;
+    justify-content: center;
+
+    
+}
+#lin{
+
+position: relative;
+top: 1vh;
+}
+#box3{
+    height:25vh;
+    width: 15vw;
+    border-radius: 50%;
+    position: relative;
+    top: 10vh;
+    right: 20vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: rgb(244, 255, 95);
+}
+#box4{
+    height:25vh;
+    width: 15vw;
+    border-radius: 50%;
+    position: relative;
+    top: 10vh;
+    right: 20vw;
+    background-color: rgb(255, 139, 201);
+}#box5{
+    height:25vh;
+    width: 15vw;
+    border-radius: 50%;
+    position: relative;
+    top: 10vh;
+    right: 20vw;
+    background-color: rgb(188, 250, 147);
+}
+
+
+#box6{
+    height:25vh;
+    width: 15vw;
+    border-radius: 50%;
+    position: relative;
+    top: 10vh;
+    right: 20vw;
+    background-color: rgb(218, 22, 224);
+}
+ #box7{
+        height:25vh;
+        width: 15vw;
+        border-radius: 50%;
+   
+        
+        background-color: rgb(161, 241, 253);
+        position: relative;
+        left: 55vw;
+        bottom: 14.5vh;
+
+    }
+    #box8{
+        height:40vh;
+        width: 40vw;
+       position: relative;
+       right: 33vw;
+       top: 20vh;
+        background-color: rgb(250, 255, 182);
+    }
+    #box9{
+        height:40vh;
+        width: 40vw;
+        background-color: rgb(157, 255, 200);
+        position: relative;
+        left: 20vw;
+        bottom: 20vh;
+    }
