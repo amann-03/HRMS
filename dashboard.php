@@ -1,3 +1,15 @@
+<html>
+<head>
+	<script src="jquery-3.7.1.js"></script>
+	<script language="javascript">
+		$(document).ready(function(){
+			setInterval(function(){
+				$('#clock').load('Dash_el/clock.php');
+			},1000);
+		});
+	</script>
+</head>
+
 <link rel="stylesheet" type="text/css" href="_CSS/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="CSS/styles.css?v=1.1">
 <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
@@ -19,6 +31,7 @@
 <div class="row">
 
 <a href="Schedule.php"class="col"> <div class="card"id ="card1">
+<br>
 		<div class="chart_container"><?php require_once('charts/Pie_chart_Dashboard.php') ?></div>
 </div>
 </a>
@@ -42,7 +55,29 @@
 	<div class="col">
 		<div class="card">
 			<div class="card-body">
-				card 1
+				<dt class="h7">Upcoming Meetings</dt>
+			<br>
+			<div style="display:flex; justify-content:space-around;">
+			<dl style="float: left;">
+				<dt>Agenda</dt>
+				<dd>xyz</dd>
+				
+			</dl>
+			<dl style="float: right;">
+				<dt>Meeting Host</dt>
+				<dd>Abc</dd>
+				
+
+			</dl>
+
+		</div>
+		<dl >
+				<dt>Time</dt>
+				<dd>Abc</dd>
+				<a href="#"  class="link-primary"><dt><h3>Join the meeting</h3></dt></a>
+				<br>
+
+			</dl>
 			</div>
 		</div>
 	</div>
@@ -70,10 +105,21 @@
 	</div>
 </a>
 <div class="col"> <div class="card">
-	card
+	
+	 <div id="clock">
+	 	<?php date_default_timezone_set("Asia/Kolkata");
+	?>
+    <div style="padding: 0.5vw;font-size: 4vh; font-weight: 700;"><?php echo date("h:i:s A")?></div>
+
+    <div style="padding: 0.5vw;font-size: 3vh;"><?php echo date("l jS  F Y")?></div>
+
+	 </div>
+
+	<a href="attendance.php" class="link-primary"><h3 style="font-size: 3.5vh;">Mark Your Attendance</h3></a>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
+</html>
