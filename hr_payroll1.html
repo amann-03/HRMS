@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance</title>
+    <link rel="stylesheet" href="hr_payroll1.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+</head>
+<body>
+    <header class="navbar">
+       
+        <img src="indo.png" id="logo" alt="logo">
+        <a href>About Us</a>
+       
+        <select id="Settings"> 
+            <option value="Home">Home</option>
+            <option value="View Profile">View Profile</option>
+            <option value="Configure">Configure</option>
+        </select>
+    </header>
+      
+    
+       <div class="sidebar">
+        <button>Overview</button>
+        <button>Employees</button>
+        <button>Projects</button>
+        <button>Onboarding</button>
+        <button>Attendance</button>
+        <button id="per">Payroll & Performance</button>
+        <button>Leaves</button>
+        <button id="logout">Logout</button>
+    </div>
+<div id="content">
+<div id="box1"><a href="hr_payroll1.html" id="lin">Analysis</a></div>
+<div id="box2"id="lin"><a href="hr_payroll2.html" id="lin">Payroll</a></div>
+<div id="box3"><h3 >Average Salary of employees 1,740 $</h3> </div>
+<div id="box4"><h3 >Average Salary of employees 1,740 $</h3> </div>
+<div id="box5"><h3 >Average Salary of employees 1,740 $</h3> </div>
+<div id="box6"><h3 >Average Salary of employees 1,740 $</h3> </div>
+<div id="box7"><h3>Average Salary of employees 1,740 $</h3> </div>
+<div id="box8">Budget across departments
+    <div id="bar"></div>
+    <canvas id="myChart2"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx2 = document.getElementById('myChart2');
+      
+        new Chart(ctx2, {
+          type: 'pie',
+          data: {
+            labels: ['IT', 'AI','ML','CSIS'],
+            datasets: [{
+              label: '# Employees ',
+              data: [12, 19,5,9],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script> 
+
+</div> 
+<div id="box9">
+    <div id="bar"></div>
+        <canvas id="myChart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                  label: 'Budget alloted to differnt projects',
+                  data: [12, 19, 3, 5, 2, 3],
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+
+  
+  
+
+
+
+
+
+</div>
