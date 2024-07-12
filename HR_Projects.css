@@ -53,7 +53,7 @@ a{
 .sidebar{
 background-color: #C4CFE1;
     width: 250px;
-    height: 669px;
+    height: 92vh;
    
 }
 button{
@@ -69,7 +69,7 @@ button{
     margin-top: 10px;
 }
 #logout{
-    margin-top: 130px;
+    margin-top: 30vh;
 }
 #projects{
    background-color: black;
