@@ -103,3 +103,54 @@ background-color: #F1F3FB;
     right: 0vw;
     display: flex;
 }
+#box3{
+    height:40vh;
+    width: 30vw;
+    background-color: white;
+    display: flex;
+    position: relative;
+    left: 6vw;
+}
+#box4{
+    position: relative;
+    top: 0vh;
+    left: 35vw;
+    display:inline-block;
+}
+
+#box5{
+    
+    overflow: scroll;
+    height: 44vh;
+    width: 83vw;
+    background-color:  #c794feb7;
+    position: relative;
+    bottom: 0vh;
+    display: flex;
+    
+}
+#example{
+   
+    font-size:medium;
+    
+    
+    background-color:rgb(215, 249, 153);
+    scale:0.95;
+   
+}
+#bar{
+   width: 30vw;
+   height: 45vh;
+   position: relative;
+   top:10vh;
+   right: 20vw;
+
+
+
+}
+#head{
+    position: relative;
+    top: 43vh;
+    right: 40vw;
+}
+
