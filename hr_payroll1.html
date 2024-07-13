@@ -40,7 +40,7 @@
 <div id="box6"><h4 id="text">Average Salary of employees 1,740 $</h4> </div>
 <div id="box7"><h4 id="text">Average Salary of employees 1,740 $</h4> </div>
 <div id="box8">Budget across departments
-    <div id="bar"></div>
+    <div id="bar2">
     <canvas id="myChart2"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -57,15 +57,17 @@
             }]
           },
           options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+            plugins:{
+                legend:{
+                    display:true,
+                    position:'right',
+                    align:'start'
+                }
             }
           }
         });
       </script> 
-
+</div>
 </div> 
 <div id="box9">
     <div id="bar"></div>
