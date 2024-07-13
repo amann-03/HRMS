@@ -188,7 +188,7 @@ top: 1vh;
         left: 20vw;
         bottom: 20vh;
     }
- #text{
+    #text{
 
       position: relative;
        top: 10vh;
@@ -196,3 +196,13 @@ top: 1vh;
 
 
     }
+    #bar2{
+         
+            position: relative;
+            margin: auto;
+            left:10vw;
+            height: 40vh;
+            width: 40vw;
+          
+    }
+    
