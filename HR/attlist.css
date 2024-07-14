@@ -224,3 +224,8 @@ top: 1vh;
 .bar-list{
     font-size:5vh;
 }
+
+.dt-type-numeric{
+  
+    text-align: left;
+}

@@ -1,3 +1,7 @@
+<?php 
+    ob_start();
+require_once('C:\xampp\htdocs\hrms\config.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,21 +60,48 @@
    
     <select class="interval" name="interval" class="input_div" >
                     <option hidden disabled selected value> -Filter by time- </option>
-                    <option value="early">before 9:00</option>
-                    <option value="on_time">9:00-9:15</option>
-                    <option value="late">After 9:15</option></select>
- <button class="subbutton" type="submit" name="submit2" style="width:4vw ;margin-right: 38vw;" >Filter</button>
-<button class="subbutton" type="submit" name="submit2">Accept</button>
+                    <option value="on_time">Before 9:15</option>
+                    <option value="late">After 9:15</option>
+                    <option value="all">All Time</option>
+                </select>
+ <button class="subbutton" type="submit" name="filter" style="width:4vw ;margin-right: 38vw;" >Filter</button>
+<button class="subbutton" type="submit" name="approve">Approve</button>
 
-  <button class="subbutton"type="submit" name="submit1">Late Punch IN</button></span>
+  <button class="subbutton"type="submit" name="late">Late Punch IN</button></span>
 
 <div role= "document", style= "width : 81vw; height: 81vh; overflow: auto; font-family: 'DM sans'; background: inherit;">
 
+  <?php 
+
+    date_default_timezone_set('Asia/Calcutta');
+    $var = '>';
+    $tt = date('Y-m-d 06:00:00');
+    if(isset($_POST['filter'])){
+        $time = $_POST['interval'];
+        if($time != 'all'){
+            $tt = date('Y-m-d 09:15:00');
+            if($time == 'on_time'){
+                $var = '<';
+            }
+            else $var = '>';
+        }
+    }
+
+ ?>
+
+<?php 
+
+    $hr1 = "SELECT employee.employee_id, date_attendance, name, designation, punch_in_time, remark from attendance join employee on employee.employee_id = attendance.employee join emp_depart on emp_depart.employee_id = attendance.employee where status = 'Pending' and punch_in_time ".$var." '".$tt."' " ;
+    $run1 = mysqli_query($conn, $hr1);
+
+ ?>
 
 <table id="example" class="display" style="width:100%,">
         <thead>
             <tr>
-                <th><input id="select-all" type="checkbox"/>  Select all</th>
+                <th><input id="select-all" type="checkbox"/></th>
+                <th>ID</th>
+                <th></th>
                 <th>Employee</th>
                 <th>Role</th>
                 <th>Punch-in-time</th>
@@ -80,14 +111,17 @@
             </tr>
         </thead>
         <tbody>
-            <?php for($x=0;$x<45;$x++) {?>
+
+            <?php while($row1 = mysqli_fetch_object($run1)) {?>
             <tr>
-                 <th><input type="checkbox" name='check[]' value=<?php echo $x; ?> style="float: left;" />ID</th>
-                <td>Name <?php echo $x; ?></td>
-                <td>worker<?php echo $x; ?></td>
-                <td><?php echo date("h:i:s A")?></td>
-                <td><?php echo date("d/m/y")?></td>
-                <td>Text</td>
+                 <th><input type="checkbox" name='check[]' value=<?php echo $row1->employee_id; ?> style="float: left;" /></th>
+                <td><?php echo $row1->employee_id; ?></td>
+                <td></td>
+                <td><?php echo $row1->name; ?></td>
+                <td><?php echo $row1->designation; ?></td>
+                <td><?php echo date("h:i:s A", strtotime($row1->punch_in_time)); ?></td>
+                <td><?php echo date("d/m/y", strtotime($row1->date_attendance));?></td>
+                <td><?php echo $row1->remark; ?></td>
                 
             </tr> 
             <?php } ?>
@@ -102,23 +136,30 @@
 </form>
 <script> new DataTable('#example',{
     ordering:false,
-     columns: [{ searchable: false }, null, { searchable: false }, { searchable: false }, { searchable: false },null]
+     columns: [{ searchable: false }, { searchable: false }, { searchable: false }, null, { searchable: false }, { searchable: false }, { searchable: false },null]
 });
 
 </script>
 <?php
-if (isset($_POST['submit1'])) {
+
+$dt = date('Y-m-d');
+if (isset($_POST['approve'])) {
     if(!empty($_POST['check'])){
     foreach( $_POST['check'] AS $value){
-        echo $value."<br>";
+        $hr2 = "UPDATE attendance set status = 'Approved' where employee = ".$value." and date_attendance = '".$dt."' ";
+        $run2 = mysqli_query($conn, $hr2);
+        header('location:Att_list.php');
     }}
 }
-if (isset($_POST['submit2'])) {
+if (isset($_POST['late'])) {
     if(!empty($_POST['check'])){
     foreach( $_POST['check'] AS $value){
-        echo $value."<br>";
+        $hr3 = "UPDATE attendance set status = 'Late Punch-in' where employee = ".$value." and date_attendance = '".$dt."' ";
+        $run3 = mysqli_query($conn, $hr3);
+        header('location:Att_list.php');
     }}
 }
   ?>
 
 </div>
+
