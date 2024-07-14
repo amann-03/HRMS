@@ -118,18 +118,37 @@
                 borderWidth: 1
             }]
         },
-    //     
-    options: {
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'right',
-                    align:'start',
-                }
-            },
+    
+    // options: {
+    //         plugins: {
+    //             legend: {
+    //                 display: true,
+    //                 position: 'right',
+    //                 align:'start',
+    //             }
+    //         },
             
-        }
-    });
+    //     }
+    // });
+    options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right',
+                        align: 'center',
+                        labels: {
+                            boxWidth: 20,
+                            padding: 20
+                        }
+                    }
+                },
+                layout: {
+                    padding: {
+                        right: 70
+                    }
+                }
+            }
+        });
 </script>
 </div>
 </div> 
