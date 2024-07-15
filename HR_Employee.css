@@ -111,3 +111,55 @@ background-color: #F1F3FB;
     margin: 0px;
     
 }
+#box2{
+    height:40vh;
+    width: 25vw;
+    background-color:white;
+    position: relative;
+    right: 0vw;
+    display: flex;
+    
+}
+#box3{
+    height:40vh;
+    width: 30vw;
+    background-color: white;
+    display: flex;
+}
+#box4{
+    height:20vh;
+    width: 20vw;
+    background-color: white;
+    position: relative;
+    right: 30.6vw;
+    bottom: 20vh;
+    display: flex;
+
+}
+#box5{
+    
+    overflow: scroll;
+    height: 44vh;
+    width: 83vw;
+    background-color: #F1F3FB;
+    position: relative;
+    bottom: 15vh;
+    display: flex;
+    
+}
+#example{
+   
+    font-size:medium;
+    
+    
+    background-color:rgb(155, 199, 252);
+    overview:scroll;
+}
+#bar{
+   width: 30vw;
+   height: 45vh;
+
+
+
+}
+
