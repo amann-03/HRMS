@@ -102,3 +102,151 @@
 
 
 </div>
+    <?php 
+  $sql3 = "SELECT department_name,department_id FROM department";
+  $result3 = $conn->query($sql3);
+   // Initialize arrays to hold department names and budget values
+   $departmentNames = [];
+   $num3=[];
+  while($row=mysqli_fetch_assoc($result3))
+  {
+    $departmentNames[] = $row['department_name'];
+    $d= $row['department_id'];
+    $sql4 = "SELECT * FROM employee WHERE department_id=$d";
+    $result4 = $conn->query($sql4);
+    $num3[]=mysqli_num_rows($result4);
+  }
+    
+
+   
+  
+
+    // Convert PHP arrays to JavaScript arrays
+    $Dep_nameJS= json_encode($departmentNames);
+    $num3_JS=json_encode($num3);
+
+ 
+    ?>
+
+
+
+<div id="box3">
+    <div id="bar"></div>
+        <canvas id="myChart"></canvas>
+       
+        <script>
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: <?php echo $Dep_nameJS; ?>,
+                datasets: [{
+                  label: '# Employees in each department',
+                  data: <?php echo $num3_JS; ?>,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+ 
+      
+    </div>
+
+
+
+<div id="box4"><p id="va"style="color: green;text-align:center;">Work From Home</p><br><br>
+<p id="va" style="font-size:500%; color:green; text-align:center;"><?php echo $num2;?></p><br></div>
+
+
+
+
+
+<div id="box5">
+ 
+
+    
+<script>
+    $(document).ready( function () {
+      $('#example').DataTable();
+    });
+  </script>
+
+<table id="example" width="82vw" >
+
+    <thead>
+        <tr>
+            <th>Employee Id</th>
+            <th>Name</th>
+            <th>Login Id</th>
+            <th>DOJ</th>
+            <th>Gender</th>
+            <th>Photo</th>
+            <th>Phone No.</th>
+            <th>Department Id</th>
+            <th>Work Status</th>
+        </tr>
+    </thead>
+    
+           
+    <tbody>
+        <?php
+        while($row=mysqli_fetch_assoc($result))
+        {
+        echo"<tr>";
+
+            echo"<td>".$row['employee_id']."</td>";
+            echo"<td>".$row['name']."</td>";
+            echo"<td>".$row['login_id']."</td>";
+            echo"<td>".$row['dob']."</td>";
+            echo"<td>".$row['gender']."</td>";
+            echo"<td>".$row['photo']."</td>";
+            echo"<td>".$row['phone_number']."</td>";
+            echo"<td>".$row['department_id']."</td>";
+            echo"<td>".$row['work_status']."</td>";
+       echo "</tr>";
+        }
+       ?>
+    </tbody>
+  
+
+</table>
+ 
+</div>
+   
+ 
+    
+
+  
+  
+
+
+
+
+
+</div>
+
+<?php
+$conn->close();
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+      </body>
+</html>
