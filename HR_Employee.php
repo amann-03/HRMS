@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="HR_Employee.css">
+    <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="scroll.css">
+</head>
+<?php  
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $database="hrms";
+    $conn=mysqli_connect($servername,$username,$password,$database);
+    if(!$conn)
+    {
+        die("Sorry we failed to connect".mysqli_connect_error());
+    }
+    else{
+        
+    }
+    $sql="SELECT * FROM employee";
+    $sql2="SELECT * FROM employee WHERE work_status='Work from home'" ;
+  
+ 
+
+    
+
+    $result=mysqli_query($conn,$sql);
+    $result2=mysqli_query($conn,$sql2);
+    
+    $num=mysqli_num_rows($result);
+    $num2=mysqli_num_rows($result2);
+    
+
+           ?>
+<body>
+    <header class="navbar">
+       
+        <img src="indo.png" id="logo" alt="logo">
+        <a href>About Us</a>
+       
+        <select id="Settings"> 
+            <option value="Home">Home</option>
+            <option value="View Profile">View Profile</option>
+            <option value="Configure">Configure</option>
+        </select>
+    </header>
+      
+    
+       <div class="sidebar">
+        <button id="overview">Overview</button>
+        <button id="Employees">Employees</button>
+        <button >Projects</button>
+        <button>Onboarding</button>
+        <button>Attendance</button>
+        <button>Payroll & Performance</button>
+        <button>Leaves</button>
+        <button id="logout">Logout</button>
+    </div>
+<div id="content">
+<div id="box1"><p id="va"style="color: blue;text-align:center;">Total Employees</p><br><br>
+<p id="va" style="font-size:500%; color:blue; text-align:center;"><?php echo $num;?></p>
+</div>
+
+
+<div id="box2"><h3 style="color:rgb(115, 30, 130);">WFO / WFH</h3>
+    
+    <div id="bar"></div>
+    <canvas id="myChart2"></canvas>
+    
+    <script>
+        const ctx2 = document.getElementById('myChart2');
+      
+        new Chart(ctx2, {
+          type: 'pie',
+          data: {
+            labels: ['WFO', 'WFH'],
+            datasets: [{
+              label: '# Employees ',
+              data: [<?php echo $num-$num2;?>, <?php echo $num2;?>],
+              borderWidth: 5
+            }]
+          },
+          options: {
+            
+          }
+        });
+      </script>
+
+
+
+</div>
