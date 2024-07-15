@@ -70,8 +70,8 @@
         <button id="logout">Logout</button>
     </div>
 <div id="content">
-<div id="box1"><p id="va"style="color: blue;text-align:center;">Total Employees</p><br><br>
-<p id="va" style="font-size:500%; color:blue; text-align:center;"><?php echo $num;?></p>
+<div id="box1"><h3 id="va"style="color: blue;text-align:center;">Total Employees</h3><br>
+<pre id="va" style="font-size:700%; color:blue; text-align:center;">    <?php echo $num;?></pre>
 </div>
 
 
@@ -102,7 +102,7 @@
 
 
 </div>
-    <?php 
+<?php 
   $sql3 = "SELECT department_name,department_id FROM department";
   $result3 = $conn->query($sql3);
    // Initialize arrays to hold department names and budget values
@@ -162,8 +162,8 @@
 
 
 
-<div id="box4"><p id="va"style="color: green;text-align:center;">Work From Home</p><br><br>
-<p id="va" style="font-size:500%; color:green; text-align:center;"><?php echo $num2;?></p><br></div>
+<div id="box4"><h3 id="va"style="color: green;text-align:center;">Work From Home:</h3><br><br>
+<pre id="va" style="font-size:700%; color:green; text-align:center;"> <?php echo $num2;?></pre><br></div>
 
 
 
@@ -248,5 +248,19 @@ $conn->close();
 
 
 
-      </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </body>
 </html>
