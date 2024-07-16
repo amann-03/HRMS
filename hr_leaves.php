@@ -41,7 +41,7 @@
         <button id="Leaves">Leaves</button>
         <button id="logout">Logout</button>
     </div>
-    <div id="content">
+    <!-- <div id="content">
        
         
         <div id="box2">Departmentwise Leaves This Month
@@ -70,8 +70,76 @@
         
         
         
-        </div>
+        </div> -->
+        <div id="content">
+    <div id="box2">Departmentwise Leaves This Month
+        <div id="bar"></div>
+        <canvas id="myChart2"></canvas>
         
+        <script>
+            <?php
+            // Database connection parameters
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $database = "hr_portal";
+
+            // Create a connection
+            $conn = new mysqli($servername, $username, $password, $database);
+
+            // Check the connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Fetch department names and total leaves from the database
+            $sql = "SELECT department.department_name, 
+                           SUM(leave_type.cl + leave_type.sl + leave_type.lwp + leave_type.hl + leave_type.pl) AS total_leaves 
+                    FROM emp_depart 
+                    JOIN leave_type ON emp_depart.employee_id = leave_type.employee_id 
+                    JOIN department ON emp_depart.department_id = department.department_id 
+                    GROUP BY department.department_name";
+            $result = $conn->query($sql);
+
+            // Initialize arrays to hold department names and total leaves
+            $departmentNames = [];
+            $totalLeaves = [];
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $departmentNames[] = $row['department_name'];
+                    $totalLeaves[] = $row['total_leaves'];
+                }
+            }
+
+            // Convert PHP arrays to JavaScript arrays
+            $departmentNamesJS = json_encode($departmentNames);
+            $totalLeavesJS = json_encode($totalLeaves);
+
+            // Close the connection
+            $conn->close();
+            ?>
+
+            const ctx2 = document.getElementById('myChart2');
+            
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: <?php echo $departmentNamesJS; ?>,
+                    datasets: [{
+                        label: '# Leaves',
+                        data: <?php echo $totalLeavesJS; ?>,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                }
+            });
+        </script>
+    </div>
+</div>
+
         
         <div id="box3"><h3 style="color: blueviolet;">Leave Type Distribution%</h3>
             <div id="bar2"></div>
