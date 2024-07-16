@@ -41,36 +41,7 @@
         <button id="Leaves">Leaves</button>
         <button id="logout">Logout</button>
     </div>
-    <!-- <div id="content">
-       
-        
-        <div id="box2">Departmentwise Leaves This Month
-            
-            <div id="bar"></div>
-            <canvas id="myChart2"></canvas>
-            
-            <script>
-                const ctx2 = document.getElementById('myChart2');
-              
-                new Chart(ctx2, {
-                  type: 'bar',
-                  data: {
-                    labels: ['IT', 'Marketing','Consulting'],
-                    datasets: [{
-                      label: '# Leaves ',
-                      data: [12, 19,10],
-                      borderWidth: 1
-                    }]
-                  },
-                  options: {
-                    indexAxis:'y',
-                  }
-                });
-              </script>
-        
-        
-        
-        </div> -->
+   
         <div id="content">
     <div id="box2">Departmentwise Leaves This Month
         <div id="bar"></div>
@@ -78,21 +49,17 @@
         
         <script>
             <?php
-            // Database connection parameters
+            
             $servername = "localhost";
             $username = "root";
             $password = "";
             $database = "hr_portal";
-
-            // Create a connection
             $conn = new mysqli($servername, $username, $password, $database);
-
-            // Check the connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            // Fetch department names and total leaves from the database
+            // main material here
             $sql = "SELECT department.department_name, 
                            SUM(leave_type.cl + leave_type.sl + leave_type.lwp + leave_type.hl + leave_type.pl) AS total_leaves 
                     FROM emp_depart 
@@ -101,7 +68,7 @@
                     GROUP BY department.department_name";
             $result = $conn->query($sql);
 
-            // Initialize arrays to hold department names and total leaves
+
             $departmentNames = [];
             $totalLeaves = [];
 
@@ -112,11 +79,11 @@
                 }
             }
 
-            // Convert PHP arrays to JavaScript arrays
+           
             $departmentNamesJS = json_encode($departmentNames);
             $totalLeavesJS = json_encode($totalLeaves);
 
-            // Close the connection
+         
             $conn->close();
             ?>
 
@@ -139,33 +106,78 @@
         </script>
     </div>
 </div>
+<div id="box3">
+    <h3 style="color: blueviolet;">Leave Type Distribution%</h3>
+    <canvas id="myChart"></canvas>
+    
+    <script>
+        <?php
+        // Database connection parameters
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "hr_portal";
+
+        // Create a connection
+        $conn = new mysqli($servername, $username, $password, $database);
+
+        // Check the connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Fetch leave type totals from the database
+        $sql = "SELECT SUM(cl) AS total_cl, SUM(sl) AS total_sl, SUM(lwp) AS total_lwp, 
+                       SUM(hl) AS total_hl, SUM(pl) AS total_pl 
+                FROM leave_type";
+        $result = $conn->query($sql);
+
+        // Initialize variables to hold leave type totals
+        $totalCL = $totalSL = $totalLWP = $totalHL = $totalPL = 0;
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $totalCL = $row['total_cl'];
+            $totalSL = $row['total_sl'];
+            $totalLWP = $row['total_lwp'];
+            $totalHL = $row['total_hl'];
+            $totalPL = $row['total_pl'];
+        }
+
+        // Convert PHP variables to JavaScript variables
+        $totalCLJS = json_encode($totalCL);
+        $totalSLJS = json_encode($totalSL);
+        $totalLWPJS = json_encode($totalLWP);
+        $totalHLJS = json_encode($totalHL);
+        $totalPLJS = json_encode($totalPL);
+
+        // Close the connection
+        $conn->close();
+        ?>
+
+        const ctx = document.getElementById('myChart');
+        
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Casual', 'Medical', 'Compensatory', 'Maternity', 'Extra Vacation'],
+                datasets: [{
+                    label: '# Leave Types',
+                    data: [<?php echo $totalCLJS; ?>, <?php echo $totalSLJS; ?>, <?php echo $totalLWPJS; ?>, <?php echo $totalHLJS; ?>, <?php echo $totalPLJS; ?>],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+    </script>
+</div>
+
 
         
-        <div id="box3"><h3 style="color: blueviolet;">Leave Type Distribution%</h3>
-            <div id="bar2"></div>
-                <canvas id="myChart"></canvas>
-               
-                <script>
-                    const ctx = document.getElementById('myChart');
-                  
-                    new Chart(ctx, {
-                      type: 'doughnut',
-                      data: {
-                        labels: ['Casual', 'Medical', 'Compensatory', 'Maternity', 'Extra Vacation',],
-                        datasets: [{
-                          label: '# Employees in each department',
-                          data: [12, 19, 3, 5, 2,],
-                          borderWidth: 1
-                        }]
-                      },
-                      options: {
-                        
-                      }
-                    });
-                  </script>
-         
-              
-            </div>
+      
         
         <h3 id="head">Leave Requests:</h3>
             <div id="box4">
