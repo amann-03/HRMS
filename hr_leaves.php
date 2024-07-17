@@ -105,34 +105,33 @@
             });
         </script>
     </div>
-</div>
+
 <div id="box3">
     <h3 style="color: blueviolet;">Leave Type Distribution%</h3>
     <canvas id="myChart"></canvas>
     
     <script>
         <?php
-        // Database connection parameters
+       
         $servername = "localhost";
         $username = "root";
         $password = "";
         $database = "hr_portal";
 
-        // Create a connection
+        
         $conn = new mysqli($servername, $username, $password, $database);
 
-        // Check the connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Fetch leave type totals from the database
+       
         $sql = "SELECT SUM(cl) AS total_cl, SUM(sl) AS total_sl, SUM(lwp) AS total_lwp, 
                        SUM(hl) AS total_hl, SUM(pl) AS total_pl 
                 FROM leave_type";
         $result = $conn->query($sql);
 
-        // Initialize variables to hold leave type totals
+        
         $totalCL = $totalSL = $totalLWP = $totalHL = $totalPL = 0;
 
         if ($result->num_rows > 0) {
@@ -144,14 +143,14 @@
             $totalPL = $row['total_pl'];
         }
 
-        // Convert PHP variables to JavaScript variables
+     
         $totalCLJS = json_encode($totalCL);
         $totalSLJS = json_encode($totalSL);
         $totalLWPJS = json_encode($totalLWP);
         $totalHLJS = json_encode($totalHL);
         $totalPLJS = json_encode($totalPL);
 
-        // Close the connection
+       
         $conn->close();
         ?>
 
@@ -183,7 +182,7 @@
             <div id="box4">
                 <input type="submit" value="Reject">
                 <input type="submit" value="Accept">
-                <input type="submit" value="Select All">
+                <div><input type="checkbox" name="select_all">Select All</div>
     
     
           </div>
@@ -199,27 +198,7 @@
             });
           </script>
         
-        <!-- <table id="example" width="82vw" >
-        
-            <thead>
-                <tr>
-                    
-                    <th>name</th>
-                    <th>department</th>
-                    <th>employee_id</th>
-                   <th>total</th>
-                    <th>start_date</th>
-                    <th>end_date</th>
-                    <th>reason</th>
-                </tr>
-            </thead>
-            <tbody>
-                
-                
-            </tbody>
-          
-        
-        </table> -->
+     
         <table id="example" width="82vw">
         <thead>
             <tr>
@@ -236,21 +215,21 @@
         </thead>
         <tbody>
             <?php
-            // Database connection parameters
+            
             $servername = "localhost";
             $username = "root";
             $password = "";
-            $database = "hr_portal";  // Replace with your database name
+            $database = "hr_portal"; 
 
-            // Create a connection
+
             $conn = new mysqli($servername, $username, $password, $database);
 
-            // Check the connection
+           
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            // SQL query to fetch the required data
+          
             $sql = "
                SELECT 
                     employee.name,
@@ -272,7 +251,17 @@
 
 
             $result = $conn->query($sql);
-
+           ?>
+            <script>
+    
+            $(document).ready(function () {
+                $("#select_all").click(function(){
+                    console.log("hi")
+                    $("#form1 input[type='checkbox']").prop('checked',this.checked);
+                });
+            });
+        </script>
+        <?php
             if ($result->num_rows > 0) {
                 // Output data of each row
                 while ($row = $result->fetch_assoc()) {
@@ -292,11 +281,15 @@
                 echo "<tr><td colspan='7'>No data found</td></tr>";
             }
 
-            // Close the connection
+            
             $conn->close();
             ?>
+
         </tbody>
+
     </table>
+        </div>
+
     </div>
          
         </div>
