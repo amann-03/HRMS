@@ -114,7 +114,8 @@ background-color: #F1F3FB;
 #box4{
     position: relative;
     top: 0vh;
-    left: 35vw;
+    right: 5vw;
+    float: right;
     display:inline-block;
 }
 
@@ -149,8 +150,8 @@ background-color: #F1F3FB;
 
 }
 #head{
+    float: left;
     position: relative;
-    top: 43vh;
-    right: 40vw;
+    left: 5vw;
 }
 

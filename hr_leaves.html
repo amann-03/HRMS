@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaves</title>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -98,12 +97,23 @@
          
               
             </div>
-        
+       <script>
+         $(document).ready(function () {
+        $("#form1 #select-all").click(function(){
+            console.log("hi")
+            $("#form1 input[type='checkbox']").prop('checked',this.checked);
+        });
+    });</script>
+
+        <form id="form1" method="post">
         <h3 id="head">Leave Requests:</h3>
             <div id="box4">
+                <input type="checkbox" id="select-all" value="Select All"> 
+                <label for="select-all">Select All</label>
+
                 <input type="submit" value="Reject">
                 <input type="submit" value="Accept">
-                <input type="submit" value="Select All">
+              
     
     
           </div>
@@ -220,7 +230,7 @@
             </tbody>
           
         
-        </table></div>
+        </table></form></div>
          
         </div>
            
