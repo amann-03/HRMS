@@ -1,5 +1,6 @@
 <?php session_start();
 
+
 require_once('connection.php');
 if (isset($_SESSION['employee_id'])) {
  ?>
@@ -18,12 +19,6 @@ if (isset($_SESSION['employee_id'])) {
  <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 
-<?php 
-
-		$stat = "SELECT cl, sl,pl,hl from leave_type where emp_id = ".$_SESSION['employee_id'];
-        $quer = mysqli_query($conn, $stat);
-
- ?>
 
 <div>
 	<div class="upperbar">
@@ -65,6 +60,12 @@ if (isset($_SESSION['employee_id'])) {
 			<script>var chrt = document.getElementById("graph3").getContext('2d');</script>
 			<?php 
 
+		$stat = "SELECT cl, sl,pl,hl from leave_type where emp_id = ".$_SESSION['employee_id'];
+    $quer = mysqli_query($conn, $stat);
+
+ ?>
+			<?php 
+
 				$total = 20;
 				if($quer->num_rows > 0){
 
@@ -90,9 +91,12 @@ if (isset($_SESSION['employee_id'])) {
 		
 		<?php 
 
-			$stat = "SELECT agenda, meet_time, duration from meeting_project join project_employees on project_employees.employee_id = ".$_SESSION['employee_id']." and project_employees.project_id = meet_proj_id order by meet_time DESC" ;
+			date_default_timezone_set('Asia/Calcutta');
+			$stat = "SELECT meeting_url, agenda, meet_time, duration from meeting_project join project_employees on project_employees.employee_id = ".$_SESSION['employee_id']." and project_employees.project_id = meet_proj_id order by meet_time DESC" ;
 			$run = mysqli_query($conn, $stat);
-			$dt = date('d-m-y h:i:s');
+			$dt = date('Y-m-d H:i:s');
+			$colors = ['Upcoming'=>'royalblue','Started'=>'green','Completed'=>'grey'];
+			$var;
 
 		 ?>
 					<div class="scrollable" style=" height: 30vh; ">
@@ -113,23 +117,19 @@ if (isset($_SESSION['employee_id'])) {
 			<tr>
 				<td><?php echo date('d/m/y', strtotime($row->meet_time));?></td>
 			    <td ><?php echo $row->agenda; ?></td>	
-				<td><?php echo date('h:i:s', strtotime($row->meet_time)); ?></td>
-				<td><?php echo $row->duration ?></td>
-				<td><?php  
-					// $data = $row->meet_time;
+				<td><?php echo date('H:i', strtotime($row->meet_time)); ?></td>
+				<td><?php echo $row->duration." min" ?></td>
+				<?php  
 
-					$copy = date('d-m-y h:i:s', strtotime($row->meet_time));
-					$hours = $row->duration / 60;
-					$min = $row->duration%60;
-					$add = date('d-m-y h:i:s', strtotime($copy. ' + '.$hours.' hours + '.$min.' minutes'));
-					echo $add;
-					// die();
+					$copy = date('Y-m-d H:i:s', strtotime($row->meet_time));
+					$min = $row->duration;
+					$add = date('Y-m-d H:i:s', strtotime(''.$copy.' + '.$min.' minutes'));
 
-					// $data->add(new DateInterval('PTH'.$hours.'M'.$min.'S0')); 
-					if($dt < $copy) echo "Upcoming";
-					else if($add > $dt) echo "Started";
-					else echo "Completed";
-			?></td>
+					if($dt < $copy)  $var = "Upcoming";
+          elseif(strtotime($add) > strtotime($dt)) $var =  "Started";
+          else $var = "Completed";
+			?>
+				<td><a href="<?php echo $row->meeting_url; ?>" target ="_blank" style = "color: <?php echo $colors[$var]; ?>;"><?php echo $var; ?></a></td>
 							</tr>
 			<?php }?>
 			</tbody>
@@ -140,11 +140,20 @@ if (isset($_SESSION['employee_id'])) {
 	 <div class="card" id="card2">	
 	 	<h3 style="text-align:left ; padding-left: 2vw; padding-top: 1vh">Notices</h3>
 			
+
+			<?php 
+
+				$stat = "SELECT notice_creator, notice_time, content, title, name from notices join employee on employee.employee_id = notices.notice_creator";
+				$quer = mysqli_query($conn, $stat);
+				$i =1 ;
+
+			 ?>
 			<div class="scrollable" style="display: flex; height: 30vh; ">
 		<table class= "table table-striped table-hover" style="text-align: center;" >
 			<thead class="table-primary">
 				<tr >
 					
+					<th style="width:0vw" >S.No</th>
 					<th>Title</th>
 					<th>Creator</th>
 					<th style="width:0vw" >Date</th>
@@ -153,19 +162,21 @@ if (isset($_SESSION['employee_id'])) {
 				
 			</thead>
 			<tbody>
-			<?php for ($x = 0; $x <= 10; $x++) {?>
+			<?php while($row = mysqli_fetch_object($quer)){?>
 			<tr >
+				<td style="width:0vw" ><?php echo $i++; ?></td>
 			    <td>
-			    	<a dataid= "<?php echo $x; ?>" data-toggle="modal" data-target="#myModal" class= "view_detail" style="font-weight: 700; border: 0px; cursor: pointer;">
-			    Emergency Meeting</a>
+			    	<a dataid= "<?php echo $row->content; ?>" dtitle="<?php echo $row->title; ?>" dtime ="<?php echo date('H:i', strtotime($row->notice_time)); ?>" data-toggle="modal" data-target="#myModal" class= "view_detail" style="font-weight: 700; border: 0px; cursor: pointer;">
+			    <?php echo $row->title; ?></a>
 			</td>	
-				<td>hi</td>
-				<td></td>
+				<td><?php echo $row->name; ?></td>
+				<td><?php echo date('d/m', strtotime($row->notice_time)); ?></td>
 			</tr>
 			<?php }?>
 			</tbody>
 		</table></div>
 		
+
 	</div>
 </div>
 </div>
@@ -176,12 +187,15 @@ if (isset($_SESSION['employee_id'])) {
 						<div class="modal-dialog modal-lg" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h4 class="modal-title" id="myModalLabel"></h4>
+									<h4 class="modal-title" id="myModalLabel" style="color: #252C58"></h4>
 								</div>
-								<div id="Notice" class="modal-body">
+								<br>
+								<div style="background-color: #FFE601">
+								<div id="Notice" class="modal-body" >
 
 								</div>
-								 <div class="time">Time</div> 
+								 <div id="Time" style="margin-left: 50vw"></div> </div>
+								 <br>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								</div>
@@ -190,19 +204,20 @@ if (isset($_SESSION['employee_id'])) {
 					</div>
 
 <script>
-
-  	$(".view_detail").click(function () {
+$(".view_detail").click(function () {
  var NoticeId = $(this).attr("dataid"); 
+ var Title = $(this).attr("dtitle"); 
+ var time = $(this).attr("dtime");
 
  document.getElementById("Notice")
                 .innerHTML = NoticeId ;
+
   document.getElementById("myModalLabel")
-                .innerHTML = " Title";
-   document.getElementsByClassName("time")
-                  .innerHTML = "Time";
+                .innerHTML = Title;
+
+   document.getElementById("Time")
+                  .innerHTML = time;
 });
-
-
 
   	</script>
 	
