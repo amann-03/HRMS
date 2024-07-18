@@ -1,0 +1,166 @@
+*{
+    margin: 0;
+    padding: 0;
+   
+
+
+}
+.navbar{
+       height: 60px;
+       width: 100vw;
+       color: white;
+       background-color: #C4CFE1;
+       text-align: right;
+       font-size: larger;
+   margin: 0%;
+   padding: 0%;
+
+       
+       
+
+
+}
+
+#logo{
+    height: 60px;
+    margin-right: 1000px;
+    margin-left: 0px;
+}
+a{
+    color: white;
+    margin-right: 30px;
+    height: 50px;
+    font-size: larger;
+    text-align: center;
+    position:relative;
+    bottom: 25px;
+    text-decoration: none;
+   
+    
+    
+}
+
+#Settings{
+    font-size: larger;
+    background-color: #C4CFE1 ;
+    color: white;
+    border: none;
+    text-align: center;
+    position:relative;
+    bottom: 25px;
+   
+    
+}
+.sidebar{
+background-color: #C4CFE1;
+    width: 250px;
+    height: 669px;
+   
+}
+button{
+    width: 240px;
+    height: 50px;
+    margin: 8px 5px 8px 5px;
+    border-radius:5px;
+    font-size: larger;
+    border: none;
+
+}
+#overview{
+    margin-top: 10px;
+}
+#logout{
+    margin-top: 130px;
+}
+#Employees{
+   background-color: black;
+   color: white;
+   border: 5px solid white;
+   
+}
+#content{
+position: absolute;
+top:8.2vh;
+left: 16.3vw;
+width:83.7vw;
+height:91.7vh;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+background-color: #F1F3FB;
+
+
+
+    
+}
+#box1{
+    height:18vh;
+    width: 20vw;
+    background-color: white;
+    position: relative;
+    right: 1vw;
+  display: block;
+    
+    
+}
+#va{
+    display: inline-block;
+    
+    height:10%;
+    padding: 0px;
+    margin: 0px;
+    
+}
+
+#box2{
+    height:40vh;
+    width: 25vw;
+    background-color:white;
+    position: relative;
+    right: 0vw;
+    display: flex;
+    
+}
+#box3{
+    height:40vh;
+    width: 30vw;
+    background-color: white;
+    display: flex;
+}
+#box4{
+    height:20vh;
+    width: 20vw;
+    background-color: white;
+    position: relative;
+    right: 30.6vw;
+    bottom: 20vh;
+    display: flex;
+
+}
+#box5{
+    
+    overflow: scroll;
+    height: 44vh;
+    width: 83vw;
+    background-color: #F1F3FB;
+    position: relative;
+    bottom: 15vh;
+    display: flex;
+    
+}
+#example{
+   
+    font-size:medium;
+    
+    
+    background-color:rgb(155, 199, 252);
+    overview:scroll;
+}
+#bar{
+   width: 30vw;
+   height: 45vh;
+
+
+
+}
