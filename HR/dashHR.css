@@ -284,7 +284,7 @@ top: 1vh;
 .min{
     padding-top: 0.5vh;
     scale: 0.8;
-     width:10vw;
+     width:12vw;
     overflow: hidden;
 white-space: nowrap;
  text-overflow: ellipsis 
@@ -295,4 +295,7 @@ white-space: nowrap;
     overflow: hidden;
 white-space: nowrap;
  text-overflow: ellipsis 
+}
+.emp{
+    width: 15vw;
 }

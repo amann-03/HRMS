@@ -14,6 +14,7 @@ require_once('C:\xampp\htdocs\hrms\config.php'); ?>
     <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
 </head>
 <body>
+    
     <header class="navbar">
        
         <img src="indo.png" id="logo" alt="logo">
@@ -51,7 +52,7 @@ require_once('C:\xampp\htdocs\hrms\config.php'); ?>
         });
     });
 </script>
-<span style="position: absolute; left: 1vw;"><a href="Att_stat.php"><button class="interval">Stastics</button></a><button class="interval" id="per">Approval</button></span>
+<span style="position: absolute; left: 1vw;"><a href="Att_stat.php"><button class="interval">Statistics</button></a><button class="interval" id="per">Approval</button></span>
 <br>
 <br>
 <form id="form1" method="post">

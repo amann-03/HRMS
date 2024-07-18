@@ -1,3 +1,6 @@
+<?php 
+   
+require_once('C:\xampp\htdocs\hrms\config.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,17 +39,54 @@
         <button id="logout"  class="side button">Logout</button>
     </div>
 <div id="content" >
-<span style="position: absolute; left: 1vw;"><button class="interval" id="per">Stastics</button><a href="Att_list.php"><button class="interval">Approval</button></a></span>
+<span style="position: absolute; left: 1vw;"><button class="interval" id="per">Statistics</button><a href="Att_list.php"><button class="interval">Approval</button></a></span>
 <div id="box6">
 <br><br><br>
 <ul class="stat">
-            <li >Employees Present :<br><div class="bar-list">9 </div></li>
-            <li > On time :          <br><div class="bar-list">9</div></li>
-            <li >Absent              <br><div class="bar-list">9</div></li>
-            <li >Late Arrival:      <br><div class="bar-list">9</div></li>
+        <?php 
+
+            $hr4 = "SELECT employee_id from employee order by employee_id desc";
+            $run4 = mysqli_query($conn, $hr4);
+            $row4 = mysqli_fetch_object($run4);
+            $total = $row4->employee_id;
+
+            $hr5 = "SELECT status from attendance where date_attendance = '".date('Y-m-d')."'";
+            $run5 = mysqli_query($conn, $hr5);
+            $on_time = 0;
+            $late_arrival = 0;
+
+            while($row5 = mysqli_fetch_object($run5)){
+                if($row5->status == 'Approved') $on_time++;
+                elseif($row5->status == 'Late Punch-in') $late_arrival++;
+            }
+
+
+         ?>
+            <li >Employees Present :<br><div class="bar-list"><?php echo $on_time + $late_arrival; ?> </div></li>
+            <li > On time :          <br><div class="bar-list"><?php echo $on_time; ?></div></li>
+            <li >Absent              <br><div class="bar-list"><?php echo $total - $on_time - $late_arrival; ?></div></li>
+            <li >Late Arrival:      <br><div class="bar-list"><?php echo $late_arrival; ?></div></li>
          </ul></div>
 
-<div id="box8">% attendance 
+<script type="text/javascript">
+stat = [];
+dt = [];
+ </script>
+         <?php 
+
+            $hr7 = "SELECT count(status) as present, date_attendance  from attendance where date_attendance between'".date('Y-m-01')."' and '".date('Y-m-d')."' and status != 'Pending' group by date_attendance";
+            $run7 = mysqli_query($conn, $hr7);
+
+            while($row7 = mysqli_fetch_object($run7)){
+                ?><script type="text/javascript">
+                dt.push('<?php echo $row7->date_attendance; ?>')
+                stat.push(<?php echo ($row7->present/$total)*100 ; ?>)
+                 </script>
+                <?php
+            }
+          ?>
+
+<div id="box8">% attendance (Monthly)
     <div id="bar2">
     <canvas id="myChart2"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -56,12 +96,12 @@
         new Chart(ctx2, {
           type: 'line',
           data: {
-            labels: ['date', 'date','date','date'],
+            labels: dt,
             datasets: [{
-              label: '# Employees ',
-              data: [12, 19,5,9],
+              label: '% Employees ',
+              data: stat,
               borderWidth: 1,
-              tension: 0.3,
+              tension: 0.4,
               fill: {
                 target: true,
                 above: 'rgba(120,120, 220,0.5)',   // Area will be red above the origin     
@@ -95,7 +135,27 @@
       </script> 
 </div>
 </div> 
-<div id="box9">Department wise attendance
+
+<script type="text/javascript">
+stat = [];
+dt = [];
+ </script>
+
+<?php 
+
+            $hr8 = "SELECT count(status) as present, department_name from attendance join emp_depart on emp_depart.employee_id = attendance.employee join department on department.department_id = emp_depart.department_id where date_attendance = '".date('Y-m-d')."' and status != 'Pending' group by department.department_id";
+            $run8 = mysqli_query($conn, $hr8);
+
+            while($row8 = mysqli_fetch_object($run8)){
+                ?><script type="text/javascript">
+                dt.push('<?php echo $row8->department_name; ?>')
+                stat.push(<?php echo $row8->present; ?>)
+                 </script>
+                <?php
+            }
+
+?>
+<div id="box9">Department wise attendance (Today)
     <div id="bar">
         <canvas id="myChart"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -105,10 +165,10 @@
             new Chart(ctx, {
               type: 'bar',
               data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: dt,
                 datasets: [{
                   label: 'Department wise attendance',
-                  data: [100, 22, 43, 35, 82, 10],
+                  data: stat,
                   borderWidth: 1,
                    backgroundColor: 'rgba(23,15,120,0.7)',
                    borderRadius:40
@@ -145,26 +205,30 @@
     top:-5vh;left:-1    vw;">
 <form id="form1" method="post">
 <div role= "document", style= "width : 81vw; height: 45vh; overflow-y: scroll; font-family: 'DM sans';">
+<?php
 
+    $hr6 = "SELECT employee.employee_id, status, name, designation, punch_in_time from attendance join employee on employee.employee_id = attendance.employee join emp_depart on emp_depart.employee_id = attendance.employee where status != 'Pending' and date_attendance = '".date('Y-m-d')."' " ;
+    $run6 = mysqli_query($conn, $hr6);
 
+?>
 <table id="example1" class="display" style="width:78vw;">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Employee</th>
                 <th>Role</th>
-                <th>Department</th>
+                <th>Status</th>
                 <th>Punch-Time</th>
             </tr>
         </thead>
         <tbody>
-            <?php for($x=0;$x<15;$x++) {?>
+            <?php while($row6 = mysqli_fetch_object($run6)) {?>
             <tr>
-                 <td>ID</td>
-                <td>Name <?php echo $x; ?></td>
-                <td>worker</td>
-                 <td>Text</td>
-                <td><?php echo date("h:i:s A")?></td>
+                 <td><?php echo $row6->employee_id; ?></td>
+                <td><?php echo $row6->name; ?></td>
+                <td><?php echo $row6->designation; ?></td>
+                 <td><?php echo $row6->status; ?></td>
+                <td><?php echo date("H:i:s", strtotime($row6->punch_in_time)); ?></td>
                 
                
                 

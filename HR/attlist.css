@@ -195,19 +195,19 @@ top: 1vh;
     }
 #box8{
     position: relative;
-    top:-5vh;
+    top:-3vh;
     left: -2vw;
     margin-left: 2vh;
-    height: 25vh;
+    height: 27vh;
 }
 #box9{
-    top: -5vh;
+    top: -3vh;
     position: relative;
     margin-left: 2vh;
-    height: 25vh;
+    height: 27vh;
 }
 #box6{
-    width: 80vw;
+    width: 82vw;
     height: 28vh;
 }
 .stat{
