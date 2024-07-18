@@ -214,7 +214,7 @@
                     <th>name</th>
                     <th>department</th>
                     <th>employee_id</th>
-                    <th>total</th>
+                    
                     <th>start_date</th>
                     <th>end_date</th>
                     <th>reason</th>
@@ -320,7 +320,7 @@
                         employee.name,
                         employee.employee_id,
                         department.department_name,
-                        (leave_type.cl + leave_type.sl + leave_type.lwp + leave_type.hl + leave_type.pl) AS total,
+                       
                         leave_requests.start_date,
                         leave_requests.end_date,
                         leave_requests.reason,
@@ -330,8 +330,7 @@
                         employee
                     JOIN
                         department ON employee.department_id = department.department_id
-                    JOIN 
-                        leave_type ON employee.employee_id = leave_type.employee_id
+                    
                     JOIN 
                         leave_requests ON employee.employee_id = leave_requests.employee_id
                     WHERE
@@ -339,6 +338,8 @@
                 ";
 
                 $result = $conn->query($sql);
+               
+
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -347,7 +348,7 @@
                         echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['department_name']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['employee_id']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['total']) . "</td>";
+                        
                         echo "<td>" . htmlspecialchars($row['start_date']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['end_date']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['reason']) . "</td>";
