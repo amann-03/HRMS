@@ -53,8 +53,8 @@ a{
 }
 .sidebar{
 background-color: #C4CFE1;
-    width: 250px;
-    height: 669px;
+    width: 17vw;
+    height:94vh;
    
 }
 button{
@@ -76,6 +76,7 @@ button{
    background-color: black;
    color: white;
    border: 5px solid white;
+   font-size: 2.3vh;
    
 }
 #content{
@@ -106,7 +107,7 @@ background-color: #F1F3FB;
 #box2{
     height:6vh;
     width: 10vw;
-    background-color: rgb(77, 77, 77);
+/*    background-color: rgb(77, 77, 77);*/
     position: relative;
    
     right: 0vw;
@@ -122,14 +123,17 @@ top: 1vh;
 }
 #box3{
     height:25vh;
+    font-size: 2.7vh;
+    text-align: center;
     width: 15vw;
     border-radius: 50%;
     position: relative;
     top: 10vh;
     right: 20vw;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: start;
     background-color: rgb(244, 255, 95);
 }
 #box4{
@@ -188,10 +192,12 @@ top: 1vh;
         left: 20vw;
         bottom: 20vh;
     }
-    #text{
+    .text{
 
       position: relative;
-       top: 10vh;
+       top: 7vh;
+       font-size: 2.7vh;
+       text-align: center;
 
 
 
@@ -200,9 +206,11 @@ top: 1vh;
          
             position: relative;
             margin: auto;
-            left:10vw;
-            height: 40vh;
-            width: 40vw;
+            left:15vw;
+            bottom : 5vh;
+            height: 45vh;
+            width: 45vw;
+            scale: 1.4;
           
     }
     

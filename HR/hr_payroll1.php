@@ -22,58 +22,28 @@
       
     
        <div class="sidebar">
-        <button>Overview</button>
-        <button>Employees</button>
-        <button>Projects</button>
-        <button>Onboarding</button>
-        <button>Attendance</button>
-        <button id="per">Payroll & Performance</button>
-        <button>Leaves</button>
-        <button id="logout">Logout</button>
+        <?php require_once('sidebar.php'); ?>
     </div>
 <div id="content">
 <div id="box1"><a href="hr_payroll1.html" id="lin">Analysis</a></div>
-<div id="box2"id="lin"><a href="hr_payroll2.html" id="lin">Payroll</a></div>
-<div id="box3"><h4 id="text" >Average Salary of employees 1,740 $</h4> </div>
-<div id="box4"><h4 id="text">Average Salary of employees 1,740 $</h4> </div>
-<div id="box5"><h4 id="text">Average Salary of employees 1,740 $</h4> </div>
-<div id="box6"><h4 id="text">Average Salary of employees 1,740 $</h4> </div>
-<div id="box7"><h4 id="text">Average Salary of employees 1,740 $</h4> </div>
-<div id="box8">Budget across departments
+<div id="box2"id="lin"></div>
+<div id="box3"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
+<div id="box4"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
+<div id="box5"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
+<div id="box6"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
+<div id="box7"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
+<div id="box8"><h2>Budget across departments</h2>
     <div id="bar2">
     <canvas id="myChart2"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- <script>
-        const ctx2 = document.getElementById('myChart2');
-      
-        new Chart(ctx2, {
-          type: 'pie',
-          data: {
-            labels: ['IT', 'AI','ML','CSIS'],
-            datasets: [{
-              label: '# Employees ',
-              data: [12, 19,5,9],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            plugins:{
-                legend:{
-                    display:true,
-                    position:'right',
-                    align:'start'
-                }
-            }
-          }
-        });
-      </script>  -->
+    
       <script>
     <?php
     // Database connection parameters
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "hr_portal";
+    $database = "hrms";
 
     // Create a connection
     $conn = new mysqli($servername, $username, $password, $database);
@@ -119,17 +89,7 @@
             }]
         },
     
-    // options: {
-    //         plugins: {
-    //             legend: {
-    //                 display: true,
-    //                 position: 'right',
-    //                 align:'start',
-    //             }
-    //         },
-            
-    //     }
-    // });
+   
     options: {
                 plugins: {
                     legend: {
@@ -156,35 +116,14 @@
     <div id="bar"></div>
         <canvas id="myChart"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <!-- <script>
-            const ctx = document.getElementById('myChart');
-          
-            new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                  label: 'Budget alloted to differnt projects',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                scales: {
-                  y: {
-                    beginAtZero: true
-                  }
-                }
-              }
-            });
-          </script> -->
+        
           <script>
     <?php
     // Database connection parameters
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "hr_portal";
+    $database = "hrms";
 
     // Create a connection
     $conn = new mysqli($servername, $username, $password, $database);
@@ -234,16 +173,17 @@
                 y: {
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                legend : {
+                    labels : {
+                        font : {
+                            size : 20
+                        }
+                    }
+                }
             }
         }
     });
 </script>
-
-  
-  
-
-
-
-
-
 </div>

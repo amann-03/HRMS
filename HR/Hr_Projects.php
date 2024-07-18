@@ -5,7 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
-    <link rel="stylesheet" type="text/css" href="HR_Projects.css">
+    <link rel="stylesheet" type="text/css" href="hr_projects.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"/>
+ 
+  <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
+  <link rel="stylesheet" href="scroll.css">
 </head>
 <body>
     <header class="navbar">
@@ -21,25 +32,18 @@
     </header>
       
     
-       <div class="sidebar">
-        <button id="overview">Overview</button>
-        <button>Employees</button>
-        <button id="projects">Projects</button>
-        <button>Onboarding</button>
-        <button>Attendance</button>
-        <button>Payroll & Performance</button>
-        <button>Leaves</button>
-        <button id="logout">Logout</button>
+      <div class="sidebar">
+        <?php require_once('sidebar.php'); ?>
     </div>
 <div id="content">
-    <div class="box1"> <h3>Ongoing Projects</h3>
+    <div class="box1"> <h2>Ongoing Projects</h2>
     <div class="detail" id="Project1">
      <h4>Project 1 name:
         <?PHP  
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "hr_portal";
+        $database = "hrms";
         
         // Create a connection
         $conn = mysqli_connect($servername, $username, $password, $database);
@@ -75,52 +79,53 @@
     
     
     </div>
-    <div class="box2"> <h3>Filter Projects</h3>
-        <input type="text" placeholder="Search by Project name..."><br><br><br>
-        Domain:
-        <select id="Domain"> 
-            <option value="All">All</option>
-            <option value="Full Stack">Full Stack</option>
-            <option value="Machine Learning">Machine Learning</option>
-            <option value="Generative AI">Generative AI</option>
+    <div class="box2"> 
+    <h3>Add Employees to Project</h3>
+            <form action="" method="POST">
+                <label for="project_id">Select Project:</label>
+                <select name="project_id" id="project_id">
+                    <?php
+                    $sql = "SELECT project_id, project_name FROM project";
+                    $result = mysqli_query($conn, $sql);
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<option value='{$row['project_id']}'>{$row['project_id']} - {$row['project_name']}</option>";
+                        }
+                    }
+                    ?>
+                </select><br><br>
 
-        </select><br><br>
-        Tech Stack:
-        <select id="Tech Stack"> 
-            <option value="All">All</option>
-            <option value="Php">Php</option>
-            <option value="MERN">MERN</option>
-            <option value="Ruby">Ruby</option>
+                <label for="employee_ids">Select Employees:</label>
+                <select name="employee_ids[]" id="employee_ids" multiple>
+                    <?php
+                    $sql = "SELECT employee_id, name FROM employee";
+                    $result = mysqli_query($conn, $sql);
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<option value='{$row['employee_id']}'>{$row['employee_id']} - {$row['name']}</option>";
+                        }
+                    }
+                    ?>
+                </select><br><br>
 
-        </select><br><br>
-        Client:
-        <select id=" Client"> 
-            <option value="All">All</option>
-            <option value="Client 1">Client 1</option>
-            <option value="Client 2">Client 2</option>
-            <option value="Client 3">Client 3</option>
+                <input type="submit" name="add_employees" value="Add Employees">
+            </form>
+            <?php
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_employees'])) {
+            $project_id = $_POST['project_id'];
+            $employee_ids = $_POST['employee_ids'];
 
-        </select><br><br>
-        Budget:
-        <select id="Budget"> 
-            <option value="All">All</option>
-            <option value="2,00,000$">2,00,000$</option>
-            <option value="5,00,000$">5,00,000$</option>
-            <option value="7,00,000$">7,00,000$</option>
-
-        </select><br><br>
-        Delayed:
-        <select id="Delayed"> 
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-
-        </select>
-
+            foreach ($employee_ids as $employee_id) {
+                $sql = "INSERT INTO project_employees (project_id, employee_id) VALUES ('$project_id', '$employee_id')";
+                mysqli_query($conn, $sql);
+            }
+        }
+        ?>
 
     
     
     </div>
-    <form action="Hr_Projects.php" method="POST">
+    <form action="" method="POST">
    <div class="box3"><h3> Change Deadline?</h3>
         Select Project Id: <br>
         <select name="project_id" id="ProjectId" > 
@@ -153,13 +158,7 @@
         </form>
     
     <?PHP
-    //  $servername = "localhost";
-    //  $username = "root";
-    //  $password = "";
-    //  $database = "hr_portal";
-     
-    //  Create a connection
-    //  $conn = mysqli_connect($servername, $username, $password, $database);
+    
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $projectId = $_POST['project_id'];
@@ -174,16 +173,12 @@
     }
     
     mysqli_query($conn, $sql);
-    // if (mysqli_query($conn, $sql)) {
-    //   echo "Record updated successfully";
-    // } else {
-    // echo "Error updating record: " . mysqli_error($conn);
-    // }
+    header("location:Hr_Projects.php");
 }
     
     ?>
   
-<form action="Hr_Projects.php" method="POST">
+<form action="" method="POST">
 <div class="box4"><h3>Complete Project?</h3>
     Select Project Id: <br>
     <select name="project_id" id="ProjectId"> 
@@ -205,8 +200,8 @@
     <textarea name="t1" rows="10" cols="20"placeholder="Comments about project.." id="Reason"></textarea>
     Any Rewards:
     <select name="rewards" id="Deadline_date"> 
-        <option value="Give rewards">Give Rewards</option>
-        <option value="No Rewards">No Rewards</option>
+        <option value="Rewarded">Give Rewards</option>
+        <option value="Not Rewarded">No Rewards</option>
        
         
 
@@ -225,13 +220,69 @@
         $rewards = $_POST['rewards']??NULL;
 
         // Construct the SQL query
-        $sql = "UPDATE project SET status = 'completed', comments = '$comments', rewards = '$rewards' WHERE project_id = '$projectId'";
+        $sql = "UPDATE project SET comments = '$comments', any_rewards = '$rewards' join project_employees on project.project_id = project_employees.project_id WHERE project_id = '$projectId'";
         mysqli_query($conn, $sql);
+        // header("location:Hr_Projects.php");
     }
 
  ?>
 
-   <div class="box5"><h3># List of filtered projects and their details will be shown here</h3></div>
+   <div class="box5"><script>
+    $(document).ready( function () {
+      $('#example').DataTable();
+    });
+  </script>
+
+<table id="example" width="60vw" >
+    <?php
+      $servername = "localhost";
+     $username = "root";
+     $password = "";
+     $database = "hrms";
+     
+     //Create a connection
+     $conn = mysqli_connect($servername, $username, $password, $database);
+     $sql2 = "SELECT * FROM `project` order by deadline desc";
+        $result2 = mysqli_query($conn, $sql2);
+    
+    
+     ?>
+
+    <thead>
+        <tr>
+            <th>Project ID</th>
+            <th>Project Name</th>
+            <th>Project Manager</th>
+            <th>Client</th>
+            <th>Budget</th>
+            <th>Dealdine</th>
+            <th>Start Date</th>
+            
+        </tr>
+    </thead>
+    
+           
+    <tbody>
+        <?php
+        while($row2=mysqli_fetch_assoc($result2))
+        {
+        echo"<tr>";
+
+            echo"<td>".$row2['project_id']."</td>";
+            echo"<td>".$row2['project_name']."</td>";
+            echo"<td>".$row2['project_manager']."</td>";
+            echo"<td>".$row2['client']."</td>";
+            echo"<td>".$row2['budget']."</td>";
+            echo"<td>".$row2['deadline']."</td>";
+            echo"<td>".$row2['start_date']."</td>";
+          
+       echo "</tr>";
+        }
+       ?>
+    </tbody>
+  
+
+</table></div>
    <form action="Hr_Projects.php" method="POST">
    <div class="box6"><h3>Create a New Project?</h3>
     
@@ -246,43 +297,23 @@
     </select><br><br>
            <input type="text" name="client_name" placeholder="Enter Client Name" required><br><br>
             <input type="text" name="project_manager_id" placeholder="Type Project Manager Id..." required><br><br>
-           <!-- Enter Beginning:
-     <input type="text" placeholder="DD/MM/YYYY"><br> 
-    <input type="datetime-local" name="deadline" required><br><br>-->
+          
     Enter Deadline:
-    <!-- <input type="text" placeholder="DD/MM/YYYY"><br> -->
-    <!-- <input type="datetime-local"><br><br>
-    <input type="text" placeholder="Enter Budget">
-   
-         <input type="text" placeholder="Enter Employee Id..."> -->
-       <!-- <input type="Submit"value="Enter"><br><br><br>
-        <p>   <input type="submit">    <input type="reset">  </p> -->
+    
         <input type="datetime-local" name="deadline" required><br><br>
             <input type="text" name="budget" placeholder="Enter Budget" required><br><br>
+                           
             <!-- <input type="text" name="employee_id" placeholder="Enter Employee Id..." required><br><br> -->
-            <input type="submit" value="Enter">
+            <input type="submit" name="create_button" value="Create">
+
             <input type="reset" value="Reset">
 
 
   </div>
 </form>
 <?php
-    // // Database connection parameters
-    // $servername = "localhost";
-    // $username = "root";
-    // $password = "";
-    // $database = "hr_portal";
-
-    // // Create a connection
-    // $conn = mysqli_connect($servername, $username, $password, $database);
-
-    // // Check the connection
-    // if (!$conn) {
-    //     die("Connection failed: " . mysqli_connect_error());
-    // }
-
-    // Check if the form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create_button"])) {
         // Get the form data
         $projectName = mysqli_real_escape_string($conn, $_POST['project_name']??NULL);
         $projectDomain = mysqli_real_escape_string($conn, $_POST['project_domain']??NULL);
@@ -290,22 +321,18 @@
         $projectManagerId = mysqli_real_escape_string($conn, $_POST['project_manager_id']??1);
         $deadline = mysqli_real_escape_string($conn, $_POST['deadline']??NULL);
         $budget = mysqli_real_escape_string($conn, $_POST['budget']??NULL);
+        $date = date('Y-m-d'); 
+
         //$employeeId = mysqli_real_escape_string($conn, $_POST['employee_id']??NULL);
 
         // Insert the project data into the project table
-        $sql = "INSERT INTO project (project_name, domain, client, project_manager, deadline, budget) VALUES ('$projectName', '$projectDomain', '$clientName', '$projectManagerId', '$deadline', '$budget')";
+        $sql = "INSERT INTO project (project_name, domain, client, project_manager, deadline, budget, start_date) VALUES ('$projectName', '$projectDomain', '$clientName', '$projectManagerId', '$deadline', '$budget', '$date')";
         
         // echo $sql; die;
 
         $run_query = mysqli_query($conn, $sql);
         
-        if($run_query){
-            header("location:http://localhost/personal/HRMS07/HRMS-master/Hr_Projects.php"); // if data successfully saved.
-            exit();
-        } else {
-            header("location:http://localhost/personal/HRMS07/HRMS-master/Hr_Projects.php"); // if data not saved.
-            exit();
-        }
+        // header("location:Hr_Projects.php");
     }
 ?>
 </div>

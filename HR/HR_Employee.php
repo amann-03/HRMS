@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +31,8 @@
     else{
         
     }
-    $sql="SELECT * FROM employee";
+    $sql="SELECT * FROM employee join department on department.department_id = employee.department_id join emp_depart on emp_depart.employee_id = employee.employee_id";
     $sql2="SELECT * FROM employee WHERE work_status='Work from home'" ;
-  
- 
-
-    
 
     $result=mysqli_query($conn,$sql);
     $result2=mysqli_query($conn,$sql2);
@@ -60,14 +57,7 @@
       
     
        <div class="sidebar">
-        <button id="overview">Overview</button>
-        <button id="Employees">Employees</button>
-        <button >Projects</button>
-        <button>Onboarding</button>
-        <button>Attendance</button>
-        <button>Payroll & Performance</button>
-        <button>Leaves</button>
-        <button id="logout">Logout</button>
+        <?php require_once('sidebar.php'); ?>
     </div>
 <div id="content">
 <div id="box1"><h3 id="va"style="color: blue;text-align:center;">Total Employees</h3><br>
@@ -75,9 +65,9 @@
 </div>
 
 
-<div id="box2"><h3 style="color:rgb(115, 30, 130);">WFO / WFH</h3>
+<div id="box2"><h3 style="color:rgb(115, 30, 130);">WFO/<br>WFH</h3>
     
-    <div id="bar"></div>
+    <div id="bar">
     <canvas id="myChart2"></canvas>
     
     <script>
@@ -98,10 +88,11 @@
           }
         });
       </script>
-
+      </div>
 
 
 </div>
+
 <?php 
   $sql3 = "SELECT department_name,department_id FROM department";
   $result3 = $conn->query($sql3);
@@ -131,7 +122,7 @@
 
 
 <div id="box3">
-    <div id="bar"></div>
+    <div id="bar">
         <canvas id="myChart"></canvas>
        
         <script>
@@ -148,6 +139,7 @@
                 }]
               },
               options: {
+                maintainAspectRatio : false,
                 scales: {
                   y: {
                     beginAtZero: true
@@ -156,10 +148,9 @@
               }
             });
           </script>
- 
+        </div>
       
     </div>
-
 
 
 <div id="box4"><h3 id="va"style="color: green;text-align:center;">Work From Home:</h3><br><br>
@@ -188,9 +179,9 @@
             <th>Login Id</th>
             <th>DOJ</th>
             <th>Gender</th>
-            <th>Photo</th>
-            <th>Phone No.</th>
-            <th>Department Id</th>
+            <th>Designation</th>
+            <th>Contact Number</th>
+            <th>Department</th>
             <th>Work Status</th>
         </tr>
     </thead>
@@ -205,11 +196,11 @@
             echo"<td>".$row['employee_id']."</td>";
             echo"<td>".$row['name']."</td>";
             echo"<td>".$row['login_id']."</td>";
-            echo"<td>".$row['dob']."</td>";
+            echo"<td>".date('y/m/d' ,strtotime($row['dob']))."</td>";
             echo"<td>".$row['gender']."</td>";
-            echo"<td>".$row['photo']."</td>";
+            echo"<td>".$row['designation']."</td>";
             echo"<td>".$row['phone_number']."</td>";
-            echo"<td>".$row['department_id']."</td>";
+            echo"<td>".$row['department_name']."</td>";
             echo"<td>".$row['work_status']."</td>";
        echo "</tr>";
         }
@@ -220,47 +211,12 @@
 </table>
  
 </div>
-   
+   </div>
  
-    
-
-  
-  
-
-
-
-
-
 </div>
 
 <?php
 $conn->close();
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </body>
 </html>

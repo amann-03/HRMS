@@ -1,29 +1,29 @@
 *{
     margin: 0;
     padding: 0;
-   
-
 
 }
+html{
+/*    overflow:hidden;*/
+}
 .navbar{
-       height: 60px;
+    height: 60px;
        width: 100vw;
        color: white;
        background-color: #C4CFE1;
        text-align: right;
        font-size: larger;
+       display: flex;
+       flex-wrap: wrap;
    margin: 0%;
    padding: 0%;
-
-       
-       
-
 
 }
 
 #logo{
     height: 60px;
-    margin-right: 1000px;
+    margin-bottom: 10vh;
+    margin-right: 60vw;
     margin-left: 0px;
 }
 a{
@@ -52,10 +52,19 @@ a{
     
 }
 .sidebar{
+    padding-top: 3.2vh;
 background-color: #C4CFE1;
-    width: 250px;
-    height: 669px;
+    width: 17vw;
+    height:89vh;
    
+}
+.side.button{
+    width: 16vw;
+    height: 50px;
+    margin: 8px 5px 8px 5px;
+    border-radius:5px;
+    font-size: larger;
+    border: none;
 }
 button{
     width: 240px;
@@ -67,7 +76,7 @@ button{
 
 }
 #overview{
-    margin-top: 10px;
+    margin-top: 30vh;
 }
 #logout{
     margin-top: 130px;
@@ -80,9 +89,9 @@ button{
 }
 #content{
 position: absolute;
-top:8.2vh;
-left: 16.3vw;
-width:83.7vw;
+top:8vh;
+left: 17vw;
+width:83vw;
 height:91.7vh;
 display: flex;
 flex-direction: row;
@@ -159,8 +168,6 @@ background-color: #F1F3FB;
 }
 #bar{
    width: 30vw;
-   height: 45vh;
-
-
-
+   height: 40vh;
+   padding-bottom: 4vh;
 }

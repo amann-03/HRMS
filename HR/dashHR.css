@@ -88,10 +88,8 @@ background-color: #C4CFE1;
     border-radius:5px;
     font-size: larger;
     border: none;
-
-
-
 }
+
 #content {
     .dropdown-menu {
         border-color: black;

@@ -29,14 +29,7 @@ require_once('C:\xampp\htdocs\hrms\config.php'); ?>
       
     
        <div class="sidebar">
-        <button class="side button">Overview</button>
-        <button class="side button">Employees</button>
-        <button class="side button">Projects</button>
-        <button  class="side button">Onboarding</button>
-        <button class="side button" id="per">Attendance</button>
-        <button  class="side button">Payroll & Performance</button>
-        <button  class="side button">Leaves</button>
-        <button id="logout"  class="side button">Logout</button>
+        <?php require_once('sidebar.php'); ?>
     </div>
 <div id="content" >
 <span style="position: absolute; left: 1vw;"><button class="interval" id="per">Statistics</button><a href="Att_list.php"><button class="interval">Approval</button></a></span>
