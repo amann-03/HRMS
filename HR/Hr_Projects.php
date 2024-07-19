@@ -85,7 +85,7 @@
                 <label for="project_id">Select Project:</label>
                 <select name="project_id" id="project_id">
                     <?php
-                    $sql = "SELECT project_id, project_name FROM project";
+                    $sql = "SELECT project_id, project_name FROM project  WHERE deadline >= '".date('Y-m-d')."'";
                     $result = mysqli_query($conn, $sql);
                     if ($result) {
                         while ($row = mysqli_fetch_assoc($result)) {
@@ -178,11 +178,11 @@
     
     ?>
   
-<form action="" method="POST">
+  <form action="hr_projects.php" method="POST">
 <div class="box4"><h3>Complete Project?</h3>
     Select Project Id: <br>
     <select name="project_id" id="ProjectId"> 
-    <?PHP  $sql = "SELECT * FROM `project`";
+    <?PHP  $sql = "SELECT * FROM `project` WHERE deadline >= '".date('Y-m-d')."'";
         $result = mysqli_query($conn, $sql);
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -197,7 +197,7 @@
 
     </select>
     
-    <textarea name="t1" rows="10" cols="20"placeholder="Comments about project.." id="Reason"></textarea>
+    <textarea name="t2" rows="10" cols="20"placeholder="Comments about project.." id="Reason"></textarea>
     Any Rewards:
     <select name="rewards" id="Deadline_date"> 
         <option value="Rewarded">Give Rewards</option>
@@ -207,25 +207,31 @@
 
     </select>
     
-    <input type="submit" value="End Project" class="deadline_button">
+    <input type="submit" value="End Project" name="end_project" class="deadline_button">
 
 </div>
     </form>
     <?php
     // Check if the form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['end_project'])) {
         // Get the form data
         $projectId = $_POST['project_id'];
-        $comments = $_POST['t1'];
+        $comments = $_POST['t2'];
         $rewards = $_POST['rewards']??NULL;
 
         // Construct the SQL query
-        $sql = "UPDATE project SET comments = '$comments', any_rewards = '$rewards' join project_employees on project.project_id = project_employees.project_id WHERE project_id = '$projectId'";
+        $sql = "UPDATE project SET comments = '$comments', rewards = '$rewards' WHERE project_id = '$projectId'";
+    
+        $sql2 = "UPDATE `project_employees` SET `any_rewards` = '$rewards' WHERE `project_id` = '$projectId'";
+
+
+       
         mysqli_query($conn, $sql);
-        // header("location:Hr_Projects.php");
+        mysqli_query($conn, $sql2);
     }
 
  ?>
+ 
 
    <div class="box5"><script>
     $(document).ready( function () {
