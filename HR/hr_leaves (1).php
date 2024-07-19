@@ -53,7 +53,7 @@
             $servername = "localhost";
             $username = "root";
             $password = "";
-            $database = "hr_portal";
+            $database = "hrms";
             $conn = new mysqli($servername, $username, $password, $database);
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -63,7 +63,7 @@
             $sql = "SELECT department.department_name, 
                            SUM(leave_type.cl + leave_type.sl + leave_type.lwp + leave_type.hl + leave_type.pl) AS total_leaves 
                     FROM emp_depart 
-                    JOIN leave_type ON emp_depart.employee_id = leave_type.employee_id 
+                    JOIN leave_type ON emp_depart.employee_id = leave_type.emp_id 
                     JOIN department ON emp_depart.department_id = department.department_id 
                     GROUP BY department.department_name";
             $result = $conn->query($sql);
@@ -117,7 +117,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $database = "hr_portal";
+        $database = "hrms";
 
         
         $conn = new mysqli($servername, $username, $password, $database);
@@ -228,7 +228,7 @@
                 $servername = "localhost";
                 $username = "root";
                 $password = "";
-                $database = "hr_portal";
+                $database = "hrms";
 
                 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -285,20 +285,20 @@
 
                                         if (!empty($leave_column)) {
                                             // Update or insert the leave_type record
-                                            $check_sql = "SELECT * FROM leave_type WHERE employee_id='$employee_id'";
+                                            $check_sql = "SELECT * FROM leave_type WHERE emp_id='$employee_id'";
                                             $check_result = $conn->query($check_sql);
 
                                             if ($check_result->num_rows > 0) {
                                                 // Update the existing record
-                                                $update_leave_sql = "UPDATE leave_type SET $leave_column = $leave_column + $leave_days WHERE employee_id='$employee_id'";
+                                                $update_leave_sql = "UPDATE leave_type SET $leave_column = $leave_column + $leave_days WHERE emp_id='$employee_id'";
                                                 if (!$conn->query($update_leave_sql)) {
                                                     echo "Error updating record: " . $conn->error;
                                                 }
                                             } else {
                                                 // Insert a new record
-                                                $insert_leave_sql = "INSERT INTO leave_type (employee_id, cl, sl, hl, pl, lwp) VALUES ('$employee_id', 0, 0, 0, 0, 0)";
+                                                $insert_leave_sql = "INSERT INTO leave_type (emp_id, cl, sl, hl, pl, lwp) VALUES ('$employee_id', 0, 0, 0, 0, 0)";
                                                 if ($conn->query($insert_leave_sql)) {
-                                                    $update_leave_sql = "UPDATE leave_type SET $leave_column = $leave_days WHERE employee_id='$employee_id'";
+                                                    $update_leave_sql = "UPDATE leave_type SET $leave_column = $leave_days WHERE emp_id='$employee_id'";
                                                     if (!$conn->query($update_leave_sql)) {
                                                         echo "Error updating record: " . $conn->error;
                                                     }
