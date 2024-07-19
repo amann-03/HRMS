@@ -61,9 +61,9 @@ td {
     font-size: larger;
     text-align: center;
     position:relative;
-    
+    bottom: 10px;
     text-decoration: none;
-   
+       font-size: 3vh;
     z-index: 1;
 }
 
@@ -74,11 +74,14 @@ td {
     border: none;
     text-align: center;
     position:relative;
+    bottom: 10px;
+        font-size: 3vh;
 }
 .sidebar{
 background-color: #C4CFE1;
     width: 17vw;
     height:94vh;
+    font-size: 2.2vh;
    
 }
 .side.button{
@@ -88,8 +91,10 @@ background-color: #C4CFE1;
     border-radius:5px;
     font-size: larger;
     border: none;
-}
 
+
+
+}
 #content {
     .dropdown-menu {
         border-color: black;
@@ -282,7 +287,7 @@ top: 1vh;
 .min{
     padding-top: 0.5vh;
     scale: 0.8;
-     width:12vw;
+     width:10vw;
     overflow: hidden;
 white-space: nowrap;
  text-overflow: ellipsis 
@@ -293,7 +298,4 @@ white-space: nowrap;
     overflow: hidden;
 white-space: nowrap;
  text-overflow: ellipsis 
-}
-.emp{
-    width: 15vw;
 }
