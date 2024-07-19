@@ -27,11 +27,143 @@
 <div id="content">
 <div id="box1"><a href="hr_payroll1.html" id="lin">Analysis</a></div>
 <div id="box2"id="lin"></div>
-<div id="box3"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
-<div id="box4"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
-<div id="box5"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
-<div id="box6"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
-<div id="box7"><h4 class="text">Average Salary of employees<br><br> 1,740 $</h4> </div>
+<div id="box3"><h4 class="text"> <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "hr_portal";
+
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT SUM(department.budget) AS totalbudget FROM department"; 
+$result = $conn->query($sql);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalbudget = $row['totalbudget'];
+    echo "Total budget of all departments<br><br>" . $totalbudget;
+}
+
+?>
+                    
+ <br><br> </h4> </div>
+
+<div id="box4"><h4 class="text"> <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "hr_portal";
+
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT SUM(project.budget) AS totalbudget FROM project"; 
+$result = $conn->query($sql);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalbudget = $row['totalbudget'];
+    echo "Total budget of all projects<br><br>" . $totalbudget;
+}
+
+?>
+                    
+ <br><br> </h4> </div>
+<div id="box5"><h4 class="text"> <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "hr_portal";
+
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT SUM(project.budget) AS totalbudget FROM project"; 
+$result = $conn->query($sql);
+$sql2 = "SELECT COUNT(*) AS row_count FROM project"; 
+$result2 = $conn->query($sql2);
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalbudget = $row['totalbudget'];
+    $row2 = $result2->fetch_assoc();
+    $row_count = $row2['row_count'];
+    
+    $averagebudget=$totalbudget/$row_count;
+    echo "Average budget of all projects<br><br>" . $averagebudget;
+}
+
+?>
+                    
+                    <br><br> </h4> </div>
+
+<div id="box6"><h4 class="text"> <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "hr_portal";
+
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT SUM(department.budget) AS totalbudget FROM department"; 
+$result = $conn->query($sql);
+$sql2 = "SELECT COUNT(*) AS row_count FROM department"; 
+$result2 = $conn->query($sql2);
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalbudget = $row['totalbudget'];
+    $row2 = $result2->fetch_assoc();
+    $row_count = $row2['row_count'];
+    
+    $averagebudget=$totalbudget/$row_count;
+    echo "Average budget of all departments<br><br>" . $averagebudget;
+}
+
+?>
+                    
+                    <br><br> </h4> </div>
+                    <div id="box7"><h4 class="text"> <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "hr_portal";
+
+$conn = new mysqli($servername, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT SUM(emp_depart.base_salary) AS totalsalary FROM emp_depart"; 
+$result = $conn->query($sql);
+$sql2 = "SELECT COUNT(*) AS row_count FROM emp_depart"; 
+$result2 = $conn->query($sql2);
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalbudget = $row['totalsalary'];
+    $row2 = $result2->fetch_assoc();
+    $row_count = $row2['row_count'];
+    
+    $averagebudget=$totalbudget/$row_count;
+    echo "Average salary of all employees<br><br>" . $averagebudget;
+}
+
+?>
+                    
+                    <br><br> </h4> </div>
 <div id="box8"><h2>Budget across departments</h2>
     <div id="bar2">
     <canvas id="myChart2"></canvas>
