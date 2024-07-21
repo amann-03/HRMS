@@ -54,7 +54,9 @@
                     <select id="year" onchange="jump()"></select>
                 </div>
             </div>
-             <div style="float:right;"><div class="dot" style="background-color: yellow;"></div> Leaves</div> 
+             <div style="float:right;"><div class="dot" style="background-color: #ff00009c;"></div> Late Punch-in  </div> 
+             <div style="float:right;"><div class="dot" style="background-color: #ffee00;"></div> Leaves  </div> 
+             <div style="float:right;"><div class="dot" style="background-color: #00b300;"></div> Present Day  </div> 
         </div>
     </div>
     <!-- Include the JavaScript file for the calendar functionality -->

@@ -1,3 +1,5 @@
+
+
 <script type="text/javascript">
 	
 // script.js 
@@ -11,22 +13,54 @@ function generate_year_range(start, end) {
     }
     return years;
 }
-
- var no_days = 4;
 var leave =[];
-startdate= new Date("7-12-2024");
-for (let i = 0; i < no_days; i++) {
+console.log("Hello");
+
+
+<?php 
+
+    $stat = "SELECT start_date, end_date from leave_requests where employee_id = ".$_SESSION['employee_id']." and status = 'Approved' ";
+
+    $quer = mysqli_query($conn, $stat);
+
+
+    while($run = mysqli_fetch_object($quer)){
+        $diff = date_diff(date_create($run->end_date),date_create($run->start_date))->days;
+    
+ ?>
+
+var no_days = <?php echo $diff; ?>;
+
+startdate = new Date('<?php echo date("m-d-Y", strtotime($run->start_date)); ?>');
+for (let i = 0; i <= no_days; i++) {
 if(i===0){
-	new_date=new Date(startdate.setDate(startdate.getDate()));
+    new_date=new Date(startdate.setDate(startdate.getDate()));
 leave.push(new_date);
 }
 else{
-	new_date=new Date(startdate.setDate(startdate.getDate()+1));
+    new_date=new Date(startdate.setDate(startdate.getDate()+1));
 leave.push(new_date);
 
- }}
+ }
+}
 
-console.log(leave);
+<?php } ?>
+
+var late = [];
+
+<?php 
+
+    $st = "SELECT date_attendance, status from attendance where employee = ".$_SESSION['employee_id']." and status = 'Late Punch-in' ";
+    $qu = mysqli_query($conn, $st);
+    while($row = mysqli_fetch_object($qu)){
+ ?>
+
+latedate = new Date('<?php echo date("m-d-Y", strtotime($row->date_attendance)); ?>');
+late.push(latedate);
+
+<?php } ?>
+console.log(late);
+
 // Initialize date-related letiables
 today = new Date();
 currentMonth = today.getMonth();
@@ -140,7 +174,14 @@ function showCalendar(month, year) {
                 	cell.className = "leave";
                 }
                 }
-              
+                for (let i = 0; i < late.length; i++) {
+                      if(date === late[i].getDate() &&
+                    year === late[i].getFullYear() &&
+                    month === late[i].getMonth()){
+
+                    cell.className = "late";
+                }
+            }
                 row.appendChild(cell);
                 date++;
             }
@@ -162,3 +203,4 @@ function daysInMonth(iMonth, iYear) {
 // Call the showCalendar function initially to display the calendar
 showCalendar(currentMonth, currentYear);
 </script>
+

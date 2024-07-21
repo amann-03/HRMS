@@ -52,11 +52,17 @@ body {
  
 /* Date picker */
 .date-picker.selected {
-    background-color: lightgreen;
+    background-color: #00b300;
     font-weight: bold;
+    color:white;
 }
  .leave {
-   background-color: yellow;
+   background-color: #ffee00;
+}
+
+.late{
+    background-color: #ff00009c;
+    color:white;
 }
 .date-picker.selected span {
     border-bottom: 2px solid currentColor;
@@ -69,7 +75,6 @@ body {
 }
  
 .date-picker:nth-child(7) {
-    color: grey;
     /* Saturday */
 }
  
