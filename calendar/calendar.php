@@ -14,7 +14,7 @@ function generate_year_range(start, end) {
     return years;
 }
 var leave =[];
-console.log("Hello");
+
 
 
 <?php 
