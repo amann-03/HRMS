@@ -80,7 +80,7 @@ This project is an HRMS (Human Resource Management System) developed during our 
   
 ## Future Prospects
 
-1. **Payroll MAnagement:**
+1. **Payroll Management:**
 
 2. **Messaging and notifications:**
 
