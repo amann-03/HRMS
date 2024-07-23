@@ -24,6 +24,7 @@ require_once('config.php');
 				$_SESSION['employee_id'] = $user->employee_id;
 		 		$_SESSION['login_id'] = $user_email;
 		 		$_SESSION['name'] = $user->name;
+		 		$_SESSION['department_id'] = $user->department_id;
 				if($user->if_employee == 1) header('location:dashboard.php');
 				else header('location:HR/DashHR.php');
 			}
