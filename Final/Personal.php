@@ -45,9 +45,18 @@ if (isset($_SESSION['employee_id'])) {
 				<h3>Team Members<h3>
 				<ul class="list-group" id="projectlist">
 					<br>
-			<li class="list-group-item">Person1</li>
-			<li class="list-group-item">Person2</li>
-			<li class="list-group-item">Person3</li>
+							<?php 
+
+			$stat = "SELECT name, employee.employee_id as id from employee join emp_depart on emp_depart.employee_id = employee.employee_id where employee.department_id = ".$_SESSION['department_id']." limit 3 ";
+			$quer = mysqli_query($conn, $stat);
+			while($res = mysqli_fetch_object($quer)){
+				if($res->id ==$_SESSION['employee_id']){
+					continue;
+				}
+		 ?>
+
+			<li class="list-group-item"><?php echo $res->name ?></li>
+			<?php } ?>
 		</ul>
 	</div>
 </div></div></div>
