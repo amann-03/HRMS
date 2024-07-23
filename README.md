@@ -26,7 +26,7 @@ This project is an HRMS (Human Resource Management System) developed during our 
 ## Technologies Used
 
 - **Backend**: PHP
-- **Database**: MySQL(PHPMyAdmin)
+- **Database**: PHPMyAdmin
 - **Frontend**: HTML, CSS, Bootstrap, JavaScript
 - **Version Control**: Git
 
